@@ -3,10 +3,15 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
 {
+
+    private $apiEndpoint = "api/*";
+    private $validationError = 'Input Validation Failed!!';
+
     /**
      * A list of the exception types that are not reported.
      *
@@ -37,5 +42,38 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($response = $this->renderMissingInputException($request, $exception)) {
+            return $response;
+        }
+    }
+
+    /**
+     * renderMissingInputException
+     *
+     * @param  mixed $request
+     * @param  mixed $exception
+     * @return void
+     */
+    public function renderMissingInputException($request, Throwable $exception)
+    {
+        if ($exception instanceof MissingInputException && $request->is($this->apiEndpoint)) {
+            return response()->json([
+                'error' => $this->validationError,
+                'message' => $exception->getMessage(),
+                'fields' => $exception->getFields()
+            ], $exception->status);
+        }
+
+        if ($exception instanceof ValidationException && $request->expctsJson()) {
+            return response()->json([
+                'error' => $this->validationError,
+                'messages' => $exception->errors()
+
+            ], $exception->status);
+        }
     }
 }
