@@ -6,10 +6,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Farm;
-use App\Http\Requests\FarmRequest;
+use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
 
-class FarmTest extends TestCase
+class FarmControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -25,7 +25,7 @@ class FarmTest extends TestCase
 
     protected function ValidateInput($data)
     {
-        $request = new FarmRequest();
+        $request = new FarmStore();
         $validator =   $this->app['validator']->make($data, $request->rules());
         if ($validator->fails()) {
             $this->missingFields = $validator->errors()->keys();
