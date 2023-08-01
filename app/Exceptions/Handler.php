@@ -49,6 +49,7 @@ class Handler extends ExceptionHandler
         if ($response = $this->renderMissingInputException($request, $exception)) {
             return $response;
         }
+        return parent::render($request, $exception);
     }
 
     /**
@@ -72,8 +73,8 @@ class Handler extends ExceptionHandler
             return response()->json([
                 'error' => $this->validationError,
                 'messages' => $exception->errors()
-
             ], $exception->status);
         }
+        return null;
     }
 }

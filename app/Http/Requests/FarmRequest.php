@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Exceptions\MissingInputException;
+use Illuminate\Validation\Rule;
 
 class FarmRequest extends FormRequest
 {
@@ -27,7 +28,12 @@ class FarmRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|string|max:100'
+            'name' => 'required|string|max:100|regex:/^[A-Za-z0-9\s]+$/',
+            'address' => 'required|string|max:255',
+            'coordinates' => 'required',
+            'capacity' => '',
+            'launched_date' => 'required|date|date_format:Y-m-d',
+            'status' => 'required|in:Active, Under Construction, Retired'
         ];
     }
 
@@ -45,7 +51,11 @@ class FarmRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Farm name field is required'
+            'name.required' => 'Farm name field is required',
+            'name.regex' => 'Farm name field must only contain alpha-numeric characters',
+            'name.string' => 'Farm name field must be string',
+            'address.required' => 'Farm address field is required',
+            'coordinates.string' => 'The coordinates field must be a string.',
         ];
     }
 }
