@@ -18,7 +18,7 @@ class MissingInputException extends Exception
     public function __construct(array $fields, $message = null)
     {
         $this->fields = $fields;
-        $message = $message ?: "Your request is missing the following required input field(s)!";
+        $message = $message ?: "Your request is missing the following required input field(s)!" . implode(',', $this->getFields());
         parent::__construct($message);
     }
 

@@ -26,14 +26,22 @@ class FarmRequest extends FormRequest
      */
     public function rules()
     {
+        /* 'name' => 'required',
+        'address' => 'required',
+        'coordinates' => 'required',
+        'capacity' => 'required',
+        'launched_date' => 'required',
+        'status' => 'required'
+        |in:Active,Under COnstruction, Retired
+        */
         return [
             //
             'name' => 'required|string|max:100|regex:/^[A-Za-z0-9\s]+$/',
             'address' => 'required|string|max:255',
             'coordinates' => 'required',
-            'capacity' => '',
+            'capacity' => 'required|numeric|integer',
             'launched_date' => 'required|date|date_format:Y-m-d',
-            'status' => 'required|in:Active, Under Construction, Retired'
+            'status' => 'required'
         ];
     }
 

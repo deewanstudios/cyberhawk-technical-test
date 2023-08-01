@@ -37,10 +37,9 @@ class FarmTest extends TestCase
     public function testCreateFarmWithValidData()
     {
         $validData =  Farm::factory()->make()->toArray();
-        dump($validData);
+        $validData['address'] = "Sample Address";
         $response = $this->post($this->endpoint, $validData);
         $response->assertStatus(201);
-        $responseData = $response->json();
         $response->assertJson(['message' => 'New farm entity created successfully', 'data' => $validData]);
         $this->assertDatabaseHas('farms', $validData);
     }
@@ -61,35 +60,66 @@ class FarmTest extends TestCase
 
     public function invalidFarmDataProvider()
     {
+        $date = date('Y-m-d', strtotime('-' . rand(0, 18) . ' years'));
+        $enumValues =  ['Active', 'Under Construction', 'Retired'];
+        $capacity =  rand(10, 300);
 
         $emptyNameField = [
             'name' => '',
-            'address' => $this->faker->address,
-            /*
-            'coordinates' => json_encode(['latitude' => $this->faker->latitude, 'longitude' => $this->faker->longitude]),
-            'capacity' => $this->faker->numberBetween(config('testing.min_value'), config('testing.max_value')),
-            'launched_date' => $this->faker->dateTimeBetween(config('testing.start_date'), config('testing.end_date')),
-            'status' => $this->faker->randomElement(config('testing.farm_enum_values'))
-            */
-
+            'address' => 'Sample Address',
+            'coordinates' => 'Sample Cordinates',
+            'capacity' => rand(1, 100),
+            'launched_date' => $date,
+            'status' => $enumValues[array_rand($enumValues)]
         ];
-
-        /* $emptyAddressField = [
-            'name' => $this->faker->colorName,
+        $emptyAddressField = [
+            'name' => 'Sample Name',
             'address' => '',
-            'coordinates' => ['latitude' => $this->faker->latitude, 'longitude' => $this->faker->longitude],
+            'coordinates' => 'Sample Cordinates',
+            'capacity' => $capacity,
+            'launched_date' => $date,
+            'status' => $enumValues[array_rand($enumValues)]
         ];
         $emptyCoordinatesField = [
-            'name' => $this->faker->colorName,
-            'address' => $this->faker->address,
+            'name' => 'Sample Name',
+            'address' => 'Sample Address',
             'coordinates' => '',
-        ]; */
-
+            'capacity' => $capacity,
+            'launched_date' => $date,
+            'status' => $enumValues[array_rand($enumValues)]
+        ];
+        $emptyCapacityField = [
+            'name' => 'Sample Name',
+            'address' => 'Sample Address',
+            'coordinates' => 'Sample coordinates',
+            'capacity' => '',
+            'launched_date' => $date,
+            'status' => $enumValues[array_rand($enumValues)]
+        ];
+        $emptyDateField = [
+            'name' => 'Sample Name',
+            'address' => 'Sample Address',
+            'coordinates' => 'Sample coordinates',
+            'capacity' => $capacity,
+            'launched_date' => '',
+            'status' => $enumValues[array_rand($enumValues)]
+        ];
+        $emptyStatusField = [
+            'name' => 'Sample Name',
+            'address' => 'Sample Address',
+            'coordinates' => 'Sample coordinates',
+            'capacity' => $capacity,
+            'launched_date' => $date,
+            'status' => ''
+        ];
 
         return [
             [$emptyNameField, ['name']],
-            /*  [$emptyAddressField, ['address']],
-            [$emptyCoordinatesField, ['coordinates']], */
+            [$emptyAddressField, ['address']],
+            [$emptyCoordinatesField, ['coordinates']],
+            [$emptyCapacityField, ['capacity']],
+            [$emptyDateField, ['launched_date']],
+            [$emptyStatusField, ['status']],
         ];
     }
 }
