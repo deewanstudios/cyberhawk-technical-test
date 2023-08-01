@@ -8,6 +8,7 @@ use Tests\TestCase;
 use App\Models\Farm;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
+use Carbon\Carbon;
 
 class FarmControllerTest extends TestCase
 {
@@ -34,6 +35,11 @@ class FarmControllerTest extends TestCase
     }
 
 
+    /**
+     * testCreateFarmWithValidData
+     *
+     * @return void
+     */
     public function testCreateFarmWithValidData()
     {
         $validData =  Farm::factory()->make()->toArray();
@@ -44,10 +50,19 @@ class FarmControllerTest extends TestCase
         $this->assertDatabaseHas('farms', $validData);
     }
 
+
+
+    /**
+     * testCreateFarmWithInvalidData
+     *
+     * @param  mixed $invalidData
+     * @param  mixed $expectedValidationFields
+     * @return void
+     */
+
     /**
      * @dataProvider invalidFarmDataProvider
      */
-
     public function testCreateFarmWithInvalidData($invalidData, $expectedValidationFields)
     {
         $response = $this->post($this->endpoint, $invalidData);
@@ -121,5 +136,21 @@ class FarmControllerTest extends TestCase
             [$emptyDateField, ['launched_date']],
             [$emptyStatusField, ['status']],
         ];
+    }
+
+    /**
+     * testGetAllFarms
+     *
+     * @return void
+     */
+    public function testGetAllFarms()
+    {
+        $farm = Farm::factory()->create();
+        $expectedData = $farm->toArray();
+        $expectedData['launched_date'] = Carbon::parse($expectedData['launched_date'])->format('Y-m-d H:i:s');
+        $response =  $this->get($this->endpoint);
+        $response->assertStatus(200);
+        $responseData = json_decode($response->getContent(), true);
+        $this->assertEquals([$expectedData], $responseData);
     }
 }

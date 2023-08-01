@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -20,7 +21,7 @@ class FarmFactory extends Factory
         $maxValue = config('testing.max_value');
         $startDate = config('testing.start_date');
         $endDate = config('testing.end_date');
-        $launchedDate = $this->faker->dateTimeBetween($startDate, $endDate)->format('Y-m-d');
+        $launchedDate = Carbon::today()->toDateString();
         $enumValues = config('testing.farm_enum_values');
         $coordinates = json_encode(['latitude' => $this->faker->latitude, 'longitude' => $this->faker->longitude]);
 

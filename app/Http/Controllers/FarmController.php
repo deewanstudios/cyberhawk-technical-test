@@ -9,6 +9,25 @@ use App\Exceptions\MissingInputException;
 
 class FarmController extends Controller
 {
+
+    public function index()
+    {
+        try {
+            $farms = cache()->remember('farms', 60, function () {
+                $farms = Farm::all();
+
+                if ($farms->isEmpty()) {
+
+                    throw new EmptyResponseException();
+                }
+                return $farms;
+            });
+            return response()->json($farms);
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
     public function store(FarmStore $request)
     {
         try {

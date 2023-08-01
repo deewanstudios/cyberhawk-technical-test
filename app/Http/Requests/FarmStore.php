@@ -26,14 +26,6 @@ class FarmStore extends FormRequest
      */
     public function rules()
     {
-        /* 'name' => 'required',
-        'address' => 'required',
-        'coordinates' => 'required',
-        'capacity' => 'required',
-        'launched_date' => 'required',
-        'status' => 'required'
-        |in:Active,Under COnstruction, Retired
-        */
         return [
             //
             'name' => 'required|string|max:100|regex:/^[A-Za-z0-9\s]+$/',
