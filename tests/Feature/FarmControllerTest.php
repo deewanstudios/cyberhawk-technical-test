@@ -2,13 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Farm;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
-use Carbon\Carbon;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class FarmControllerTest extends TestCase
 {
@@ -154,6 +154,11 @@ class FarmControllerTest extends TestCase
         $this->assertEquals([$expectedData], $responseData);
     }
 
+    /**
+     * testGetSingleFarm
+     *
+     * @return void
+     */
     public function testGetSingleFarm()
     {
         $this->withoutExceptionHandling();
@@ -163,5 +168,43 @@ class FarmControllerTest extends TestCase
         $response = $this->get($this->endpoint . '/' . $farm->id);
         $response->assertStatus(200);
         $response->assertJson($expectedData);
+    }
+
+    public function testFarmUpdate()
+    {
+
+        $this->withoutExceptionHandling();
+
+        $farm = Farm::factory()->create();
+        $date = Carbon::create('-' . rand(config('testing.min_value'), config('testing.max_value')) . 'years')->format('Y-m-d');
+        $enum = config('testing.farm_enum_values');
+        $updateFarmData = [
+            'name' => 'Updated Farm Name',
+            'address' => 'Updated Farm Address',
+            'coordinates' => 'Updated Farm Coordinates',
+            'capacity' => rand(config('testing.min_value'), config('testing.max_value')),
+            'launched_date' => $date,
+            'status' => $enum[array_rand($enum)]
+        ];
+        Farm::where('id', $farm->id)->update($updateFarmData);
+        $response = $this->put($this->endpoint . '/' . $farm->id, $updateFarmData);
+        $response->assertStatus(200);
+        $updatedFarm = Farm::find($farm->id);
+        // format updated farm's launched date to match expected response data
+        $updatedFarm['launched_date'] = Carbon::parse($updatedFarm['launched_date'])->format('Y-m-d');
+        $response->assertJson(
+            [
+                'message' => 'Farm Updated successfully',
+                'data' => $updatedFarm->toArray()
+            ]
+        );
+
+        $this->assertEquals($updateFarmData['name'], $updatedFarm['name']);
+        $this->assertEquals($updateFarmData['address'], $updatedFarm['address']);
+        $this->assertEquals($updateFarmData['coordinates'], $updatedFarm['coordinates']);
+        $this->assertEquals($updateFarmData['capacity'], $updatedFarm['capacity']);
+        $this->assertEquals($updateFarmData['launched_date'], $updatedFarm['launched_date']);
+        $this->assertEquals($updateFarmData['status'], $updatedFarm['status']);
+        $this->assertDatabaseHas('farms', $updatedFarm->toArray());
     }
 }

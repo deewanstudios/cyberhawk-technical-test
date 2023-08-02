@@ -65,4 +65,16 @@ class FarmController extends Controller
         } catch (MissingInputException $e) {
         }
     }
+
+    public function update(FarmStore $farmStore, Farm $farm)
+    {
+        $validateData = $farmStore->validated();
+        $farm->update($validateData);
+        return response()->json(
+            [
+                'message' => 'Farm Updated successfully',
+                'data' => $farm
+            ]
+        );
+    }
 }

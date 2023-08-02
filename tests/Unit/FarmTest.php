@@ -41,4 +41,25 @@ class FarmTest extends TestCase
         $this->assertEquals($farm->launched_date, $retrievedFarm->launched_date);
         $this->assertEquals($farm->status, $retrievedFarm->status);
     }
+
+    public function testUpdateAFarm()
+    {
+        $farm = Farm::factory()->create();
+        $data = [
+            'name' => 'Updated Farm Name',
+            'address' => 'Updated Farm Address',
+            'coordinates' => 'Updated Farm Coordinates',
+            'capacity' => '10',
+            'launched_date' => Carbon::create('- 10 years'),
+            'status' => 'Active'
+        ];
+        Farm::where('id', $farm->id)->update($data);
+        $updatedFarm = Farm::find($farm->id);
+        $this->assertEquals($data['name'], $updatedFarm['name']);
+        $this->assertEquals($data['address'], $updatedFarm['address']);
+        $this->assertEquals($data['coordinates'], $updatedFarm['coordinates']);
+        $this->assertEquals($data['capacity'], $updatedFarm['capacity']);
+        $this->assertEquals($data['launched_date'], $updatedFarm['launched_date']);
+        $this->assertEquals($data['status'], $updatedFarm['status']);
+    }
 }

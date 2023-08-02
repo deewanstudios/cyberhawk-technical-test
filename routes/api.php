@@ -24,4 +24,5 @@ Route::prefix("farms")->group(function () {
     Route::post("/", [FarmController::class, 'store']);
     Route::get("/", [FarmController::class, 'index']);
     Route::get("/{farm}", [FarmController::class, 'show']);
+    Route::put("/{farm}", [FarmController::class, 'update']);
 });
