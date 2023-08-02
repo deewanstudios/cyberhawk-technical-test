@@ -160,8 +160,8 @@ class FarmControllerTest extends TestCase
         $farm = Farm::factory()->create();
         $expectedData = $farm->toArray();
         $expectedData['launched_date'] = Carbon::parse($expectedData['launched_date'])->format('Y-m-d H:i:s');
-        $response = $this->get($this->endpoint . '/' . $farm);
+        $response = $this->get($this->endpoint . '/' . $farm->id);
         $response->assertStatus(200);
-
+        $response->assertJson($expectedData);
     }
 }
