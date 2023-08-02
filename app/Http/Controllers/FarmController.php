@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Farm;
-use Illuminate\Http\Request;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
-use Carbon\Carbon;
 
 class FarmController extends Controller
 {
