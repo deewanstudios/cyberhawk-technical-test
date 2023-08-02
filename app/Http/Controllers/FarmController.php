@@ -17,7 +17,7 @@ class FarmController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse A JSON response containing the list of farms.
      */
-    
+
     public function index()
     {
         try {

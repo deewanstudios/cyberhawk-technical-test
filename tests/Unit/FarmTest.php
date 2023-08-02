@@ -23,14 +23,13 @@ class FarmTest extends TestCase
         $this->assertCount(10, $farms);
         foreach ($farms as $farm) {
             $this->assertInstanceOf(Farm::class, $farm);
-            ;
         }
     }
 
     public function testGetAFarm()
     {
         $farm = Farm::factory()->create();
-        //  format the creted farms date, so that it matches the retrieved farms date
+        //  format the created farms date, so that it matches the retrieved farms date
         $farm["launched_date"] = Carbon::parse($farm['launched_date'])->format('Y-m-d H:i:s');
         $retrievedFarm = Farm::find($farm->id);
         // Assert that retrieved farm matches created farm
