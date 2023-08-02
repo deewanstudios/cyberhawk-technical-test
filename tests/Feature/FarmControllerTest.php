@@ -27,7 +27,7 @@ class FarmControllerTest extends TestCase
     protected function ValidateInput($data)
     {
         $request = new FarmStore();
-        $validator =   $this->app['validator']->make($data, $request->rules());
+        $validator = $this->app['validator']->make($data, $request->rules());
         if ($validator->fails()) {
             $this->missingFields = $validator->errors()->keys();
             throw new MissingInputException($this->missingFields);
@@ -42,7 +42,7 @@ class FarmControllerTest extends TestCase
      */
     public function testCreateFarmWithValidData()
     {
-        $validData =  Farm::factory()->make()->toArray();
+        $validData = Farm::factory()->make()->toArray();
         $validData['address'] = "Sample Address";
         $response = $this->post($this->endpoint, $validData);
         $response->assertStatus(201);
@@ -76,8 +76,8 @@ class FarmControllerTest extends TestCase
     public function invalidFarmDataProvider()
     {
         $date = date('Y-m-d', strtotime('-' . rand(0, 18) . ' years'));
-        $enumValues =  ['Active', 'Under Construction', 'Retired'];
-        $capacity =  rand(10, 300);
+        $enumValues = ['Active', 'Under Construction', 'Retired'];
+        $capacity = rand(10, 300);
 
         $emptyNameField = [
             'name' => '',
@@ -148,9 +148,20 @@ class FarmControllerTest extends TestCase
         $farm = Farm::factory()->create();
         $expectedData = $farm->toArray();
         $expectedData['launched_date'] = Carbon::parse($expectedData['launched_date'])->format('Y-m-d H:i:s');
-        $response =  $this->get($this->endpoint);
+        $response = $this->get($this->endpoint);
         $response->assertStatus(200);
         $responseData = json_decode($response->getContent(), true);
         $this->assertEquals([$expectedData], $responseData);
+    }
+
+    public function testGetSingleFarm()
+    {
+        $this->withoutExceptionHandling();
+        $farm = Farm::factory()->create();
+        $expectedData = $farm->toArray();
+        $expectedData['launched_date'] = Carbon::parse($expectedData['launched_date'])->format('Y-m-d H:i:s');
+        $response = $this->get($this->endpoint . '/' . $farm);
+        $response->assertStatus(200);
+
     }
 }

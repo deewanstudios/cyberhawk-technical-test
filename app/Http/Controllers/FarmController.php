@@ -28,6 +28,12 @@ class FarmController extends Controller
         }
     }
 
+
+    public function show()
+    {
+
+    }
+
     public function store(FarmStore $request)
     {
         try {
