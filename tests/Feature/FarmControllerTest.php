@@ -172,9 +172,6 @@ class FarmControllerTest extends TestCase
 
     public function testFarmUpdate()
     {
-
-        $this->withoutExceptionHandling();
-
         $farm = Farm::factory()->create();
         $date = Carbon::create('-' . rand(config('testing.min_value'), config('testing.max_value')) . 'years')->format('Y-m-d');
         $enum = config('testing.farm_enum_values');
@@ -206,5 +203,27 @@ class FarmControllerTest extends TestCase
         $this->assertEquals($updateFarmData['launched_date'], $updatedFarm['launched_date']);
         $this->assertEquals($updateFarmData['status'], $updatedFarm['status']);
         $this->assertDatabaseHas('farms', $updatedFarm->toArray());
+    }
+
+    public function testFarmPatch()
+    {
+        $this->withoutExceptionHandling();
+        $farm = Farm::factory()->create();
+        $farmPatchData = [
+            'name' => 'Farm Name Patch'
+        ];
+        Farm::where('id', $farm->id)->update($farmPatchData);
+        $response = $this->patch($this->endpoint . '/' . $farm['id'], $farmPatchData);
+        $response->assertStatus(200);
+        $pathedfarm = Farm::find($farm->id);
+        // format patched farm's launched date to match expected response data
+        $pathedfarm['launched_date'] = Carbon::parse($pathedfarm['launched_date'])->format('Y-m-d H:i:s');
+        $response->assertJson(
+            [
+                'message' => 'Farm Patch Operation Was Successfull',
+                'data' => $pathedfarm->toArray()
+            ]
+        );
+        $this->assertEquals($farmPatchData['name'], $pathedfarm['name']);
     }
 }

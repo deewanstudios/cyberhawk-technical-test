@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FarmPatch;
 use App\Models\Farm;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
@@ -57,11 +58,10 @@ class FarmController extends Controller
      */
     public function store(FarmStore $request)
     {
-        try {
-            $farm = Farm::create($request->validated());
-            return response()->json(['message' => 'New farm entity created successfully', 'data' => $farm], 201);
-        } catch (MissingInputException $e) {
-        }
+
+        $farm = Farm::create($request->validated());
+        return response()->json(['message' => 'New farm entity created successfully', 'data' => $farm], 201);
+
     }
 
     public function update(FarmStore $farmStore, Farm $farm)
@@ -74,5 +74,15 @@ class FarmController extends Controller
                 'data' => $farm
             ]
         );
+    }
+
+    public function edit(FarmPatch $farmPatch, Farm $farm)
+    {
+        $validateData = $farmPatch->validated();
+        $farm->update($validateData);
+        return response()->json([
+            'message' => 'Farm Patch Operation Was Successfull',
+            'data' => $farm
+        ]);
     }
 }
