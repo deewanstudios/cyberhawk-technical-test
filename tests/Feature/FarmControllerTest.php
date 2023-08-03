@@ -46,7 +46,12 @@ class FarmControllerTest extends TestCase
         $validData['address'] = "Sample Address";
         $response = $this->post($this->endpoint, $validData);
         $response->assertStatus(201);
-        $response->assertJson(['message' => 'New farm entity created successfully', 'data' => $validData]);
+        $response->assertJson(
+            [
+                'message' => 'New Farm Entity Created Successfully!',
+                'data' => $validData
+            ]
+        );
         $this->assertDatabaseHas('farms', $validData);
     }
 
@@ -191,7 +196,7 @@ class FarmControllerTest extends TestCase
         $updatedFarm['launched_date'] = Carbon::parse($updatedFarm['launched_date'])->format('Y-m-d');
         $response->assertJson(
             [
-                'message' => 'Farm Updated successfully',
+                'message' => 'Farm Update Operation Was Successfull!',
                 'data' => $updatedFarm->toArray()
             ]
         );
@@ -220,7 +225,7 @@ class FarmControllerTest extends TestCase
         $pathedfarm['launched_date'] = Carbon::parse($pathedfarm['launched_date'])->format('Y-m-d H:i:s');
         $response->assertJson(
             [
-                'message' => 'Farm Patch Operation Was Successfull',
+                'message' => 'Farm Patch Operation Was Successfull!',
                 'data' => $pathedfarm->toArray()
             ]
         );

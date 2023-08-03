@@ -60,8 +60,13 @@ class FarmController extends Controller
     {
 
         $farm = Farm::create($request->validated());
-        return response()->json(['message' => 'New farm entity created successfully', 'data' => $farm], 201);
-
+        return response()->json(
+            [
+                'message' => 'New Farm Entity Created Successfully!',
+                'data' => $farm
+            ],
+            201
+        );
     }
 
     public function update(FarmStore $farmStore, Farm $farm)
@@ -70,7 +75,7 @@ class FarmController extends Controller
         $farm->update($validateData);
         return response()->json(
             [
-                'message' => 'Farm Updated successfully',
+                'message' => 'Farm Update Operation Was Successfull!',
                 'data' => $farm
             ]
         );
@@ -79,9 +84,10 @@ class FarmController extends Controller
     public function edit(FarmPatch $farmPatch, Farm $farm)
     {
         $validateData = $farmPatch->validated();
-        $farm->update($validateData);
+        $farm->fill($validateData);
+        $farm->save();
         return response()->json([
-            'message' => 'Farm Patch Operation Was Successfull',
+            'message' => 'Farm Patch Operation Was Successfull!',
             'data' => $farm
         ]);
     }

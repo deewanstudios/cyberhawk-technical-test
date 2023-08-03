@@ -3,10 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\FarmStore;
+use App\Http\Requests\Concerns\FarmValidationErrorsHandler;
 
 class FarmPatch extends FormRequest
 {
+
+    use FarmValidationErrorsHandler;
     /**
      * Determine if the user is authorized to make this request.
      *
