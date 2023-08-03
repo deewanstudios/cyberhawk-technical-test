@@ -26,4 +26,5 @@ Route::prefix("farms")->group(function () {
     Route::get("/{farm}", [FarmController::class, 'show']);
     Route::put("/{farm}", [FarmController::class, 'update']);
     Route::patch("/{farm}", [FarmController::class, 'edit']);
+    Route::delete("/{farm}", [FarmController::class, 'delete']);
 });

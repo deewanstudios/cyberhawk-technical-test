@@ -6,6 +6,7 @@ use App\Http\Requests\FarmPatch;
 use App\Models\Farm;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class FarmController extends Controller
 {
@@ -86,5 +87,22 @@ class FarmController extends Controller
             'message' => 'Farm Patch Operation Was Successfull!',
             'data' => $farm
         ]);
+    }
+
+
+    public function delete(Farm $farm)
+    {
+
+
+        if (!$farm->delete()) {
+            // throw new ApiResourceNotFoundException();
+            throw new ModelNotFoundException('The Farm Resources That You Have Requested, Does Not Exist!!!');
+        }
+        return response()->json(
+            [
+                'data' => 'Farm Resource Deleted Successfull'
+            ],
+            200
+        );
     }
 }

@@ -62,4 +62,11 @@ class FarmTest extends TestCase
         $this->assertEquals($data['launched_date'], $updatedFarm['launched_date']);
         $this->assertEquals($data['status'], $updatedFarm['status']);
     }
+
+    public function testDeleteAFarm()
+    {
+        $farm = Farm::factory()->create();
+        Farm::destroy($farm->id);
+        $this->assertDatabaseMissing('farms', ['id' => $farm->id]);
+    }
 }

@@ -231,4 +231,20 @@ class FarmControllerTest extends TestCase
         );
         $this->assertEquals($farmPatchData['name'], $patchedfarm['name']);
     }
+
+    public function testFarmDelete()
+    {
+        $this->withoutExceptionHandling();
+        $farm = Farm::factory()->create();
+        $response = $this->delete($this->endpoint . '/' . $farm->id);
+        $response->assertStatus(200);
+        $response->assertJson(
+            [
+                'data' => 'Farm Resource Deleted Successfull'
+            ],
+            200
+        );
+
+        $this->assertDatabaseMissing('farms', ['id' => $farm->id]);
+    }
 }
