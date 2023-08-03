@@ -19,20 +19,16 @@ class FarmController extends Controller
 
     public function index()
     {
-        try {
-            $farms = cache()->remember('farms', 60, function () {
-                $farms = Farm::all();
+        $farms = cache()->remember('farms', 60, function () {
+            $farms = Farm::all();
 
-                if ($farms->isEmpty()) {
+            if ($farms->isEmpty()) {
 
-                    throw new EmptyResponseException();
-                }
-                return $farms;
-            });
-            return response()->json($farms);
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+                throw new EmptyResponseException();
+            }
+            return $farms;
+        });
+        return response()->json($farms);
     }
     /**
      * Show the details of a specific farm.

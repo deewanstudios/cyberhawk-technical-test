@@ -15,6 +15,9 @@ class MissingInputException extends Exception
 
     protected $fields;
 
+    private $validationError = 'Input Validation Failed!!';
+
+
     public function __construct(array $fields, $message = null)
     {
         $this->fields = $fields;
@@ -42,5 +45,22 @@ class MissingInputException extends Exception
         $this->fields = $fields;
 
         return $this;
+    }
+
+    public function renderMissingExceptionError()
+    {
+        return response()->json([
+            'error' => $this->getValidationError(),
+            'message' => $this->getMessage(),
+            'fields' => $this->getFields()
+        ], $this->status);
+    }
+
+    /**
+     * Get the value of validationError
+     */
+    public function getValidationError()
+    {
+        return $this->validationError;
     }
 }

@@ -62,11 +62,8 @@ class Handler extends ExceptionHandler
     public function renderMissingInputException($request, Throwable $exception)
     {
         if ($exception instanceof MissingInputException && $request->is($this->apiEndpoint)) {
-            return response()->json([
-                'error' => $this->validationError,
-                'message' => $exception->getMessage(),
-                'fields' => $exception->getFields()
-            ], $exception->status);
+
+            return $exception->renderMissingExceptionError();
         }
 
         if ($exception instanceof ValidationException && $request->expctsJson()) {

@@ -220,15 +220,15 @@ class FarmControllerTest extends TestCase
         Farm::where('id', $farm->id)->update($farmPatchData);
         $response = $this->patch($this->endpoint . '/' . $farm['id'], $farmPatchData);
         $response->assertStatus(200);
-        $pathedfarm = Farm::find($farm->id);
+        $patchedfarm = Farm::find($farm->id);
         // format patched farm's launched date to match expected response data
-        $pathedfarm['launched_date'] = Carbon::parse($pathedfarm['launched_date'])->format('Y-m-d H:i:s');
+        $patchedfarm['launched_date'] = Carbon::parse($patchedfarm['launched_date'])->format('Y-m-d H:i:s');
         $response->assertJson(
             [
                 'message' => 'Farm Patch Operation Was Successfull!',
-                'data' => $pathedfarm->toArray()
+                'data' => $patchedfarm->toArray()
             ]
         );
-        $this->assertEquals($farmPatchData['name'], $pathedfarm['name']);
+        $this->assertEquals($farmPatchData['name'], $patchedfarm['name']);
     }
 }
