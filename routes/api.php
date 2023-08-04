@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FarmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::prefix("farms")->group(function () {
+    Route::post("/", [FarmController::class, 'store']);
+    Route::get("/", [FarmController::class, 'index']);
+    Route::get("/{farm}", [FarmController::class, 'show']);
+    Route::put("/{farm}", [FarmController::class, 'update']);
+    Route::patch("/{farm}", [FarmController::class, 'edit']);
+    Route::delete("/{farm}", [FarmController::class, 'delete']);
 });
