@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Turbine extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "name",
+        "description",
+        'location',
+        'install_date',
+        'status'
+    ];
 }
