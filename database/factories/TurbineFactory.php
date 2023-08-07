@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Farm;
 use Carbon\Carbon;
+use App\Models\Turbine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,7 @@ class TurbineFactory extends Factory
         $endDate = intval(config('testing.end_date'));
         $date = Carbon::create(rand($startDate, $endDate))->toDateString();
         $coordinates = json_encode(['latitude' => $this->faker->latitude, 'longitude' => $this->faker->longitude]);
+        $farmId = Farm::factory()->create()->id;
 
 
         return [
@@ -30,7 +32,7 @@ class TurbineFactory extends Factory
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
             'location' => $coordinates,
-            'farm_id' => Farm::factory()->create(),
+            'farm_id' => $farmId,
             'install_date' => $date,
             'status' => $enumValues[array_rand($enumValues)]
         ];

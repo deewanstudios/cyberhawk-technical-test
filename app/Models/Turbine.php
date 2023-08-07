@@ -10,10 +10,16 @@ class Turbine extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        "description",
+        'name',
+        'description',
         'location',
+        'farm_id',
         'install_date',
         'status'
     ];
+
+    public function farm()
+    {
+        return $this->belongsTo(Farm::class);
+    }
 }

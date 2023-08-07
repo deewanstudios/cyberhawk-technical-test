@@ -17,4 +17,9 @@ class Farm extends Model
         "launched_date",
         'status'
     ];
+
+    public function turbines()
+    {
+        return $this->hasMany(Turbine::class);
+    }
 }

@@ -44,7 +44,7 @@ class FarmControllerTest extends TestCase
     {
         $validData = Farm::factory()->make()->toArray();
         $validData['address'] = "Sample Address";
-        $response = $this->post($this->endpoint, $validData);
+        $response = $this->postJson($this->endpoint, $validData);
         $response->assertStatus(201);
         $response->assertJson(
             [
