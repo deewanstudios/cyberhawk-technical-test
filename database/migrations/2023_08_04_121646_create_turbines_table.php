@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -19,7 +20,7 @@ return new class extends Migration {
             $table->string("location", 255);
             $table->foreignId('farm_id')->constrained()->onDelete('cascade');
             $table->date('install_date')->nullable();
-            $table->enum('status', config('WindFarmXpert.farm_status'));
+            $table->enum('status', config('WindFarmXpert.turbine_status'));
             $table->timestamps();
         });
     }

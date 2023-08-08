@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\CRUDService;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use App\Services\CRUDService;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Http\FormRequest;
 
 class CRUDController extends Controller
 {
@@ -23,6 +24,16 @@ class CRUDController extends Controller
             'message' => "New {$createdObjectType} Entity Created Successfully!",
             'data' => $data
         ], 201);
+    }
+
+    public function updateAll(FormRequest $request, Model $model, $updatedObjectType)
+    {
+        $model->update($request->validated());
+        $data = $this->crudService->update($model);
+        return response()->json([
+            'message' => "{$updatedObjectType} Update Operation Was Successfull!",
+            'data' => $data
+        ]);
     }
 
     public function patch(FormRequest $request, $id, $updatedObjectType)

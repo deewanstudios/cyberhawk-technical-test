@@ -32,5 +32,6 @@ Route::prefix("farms")->group(function () {
 
 Route::prefix("turbines")->group(function () {
     Route::post("/", [TurbineController::class, 'store']);
+    Route::put("/{turbine}", [TurbineController::class, 'update']);
     Route::patch("/{turbine}", [TurbineController::class, 'edit']);
 });

@@ -27,4 +27,9 @@ class TurbineController extends CRUDController
     {
         return parent::patch($request, $turbine->id, $this->createdObjectType);
     }
+
+    public function update(TurbineStore $request,  Turbine $turbine)
+    {
+        return parent::updateAll($request, $turbine, $this->createdObjectType);
+    }
 }

@@ -19,7 +19,7 @@ class TurbineFactory extends Factory
      */
     public function definition()
     {
-        $enumValues = config('testing.farm_enum_values');
+        $enumValues = config('testing.turbine_enums');
         $startDate = config('testing.start_date');
         $endDate = intval(config('testing.end_date'));
         $date = Carbon::create(rand($startDate, $endDate))->toDateString();

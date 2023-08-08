@@ -24,6 +24,13 @@ class CRUDService
         return $this->model::create($data);
     }
 
+    public function update(Model $model)
+    {
+
+        $this->model->update($model->toArray());
+        return $model;
+    }
+
     public function edit($id, array $data)
     {
         $object = $this->model::findOrFail($id);
