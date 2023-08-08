@@ -2,9 +2,11 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Validation\ValidationException;
 use Throwable;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -42,6 +44,10 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        $this->renderable(function (NotFoundHttpException $exception, Request $request) {
+            return $this->renderApiResourceNotFoundException($request, $exception);
+        });
     }
 
     public function render($request, Throwable $exception)
@@ -66,12 +72,24 @@ class Handler extends ExceptionHandler
             return $exception->renderMissingExceptionError();
         }
 
-        if ($exception instanceof ValidationException && $request->expctsJson()) {
+        if ($exception instanceof ValidationException && $request->expectsJson()) {
             return response()->json([
                 'error' => $this->validationError,
                 'messages' => $exception->errors()
             ], $exception->status);
         }
+
+
         return null;
+    }
+
+    public function renderApiResourceNotFoundException($request, Throwable $exception)
+    {
+
+        if ($exception instanceof NotFoundHttpException && $request->is('api/*')) {
+            return response()->json([
+                'message' => 'The Requested Resource(s), Does Not Exist On This Service!'
+            ], 404);
+        }
     }
 }

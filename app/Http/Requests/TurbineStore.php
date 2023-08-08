@@ -2,12 +2,15 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 
-class FarmStore extends FormRequest
+class TurbineStore extends FormRequest
 {
     use RequestValidationErrorsHandler;
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,12 +29,13 @@ class FarmStore extends FormRequest
     public function rules()
     {
         return [
+
             //
             'name' => 'required|string|max:100|regex:/^[A-Za-z0-9\s]+$/',
-            'address' => 'required|string|max:255',
-            'coordinates' => 'required',
-            'capacity' => 'required|numeric|integer',
-            'launched_date' => 'required|date|date_format:Y-m-d',
+            'description' => 'required|string|max:255',
+            'location' => 'required',
+            'farm_id' => 'required|numeric|integer',
+            'install_date' => 'required|date|date_format:Y-m-d',
             'status' => 'required'
         ];
     }
@@ -39,11 +43,12 @@ class FarmStore extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Farm name field is required',
-            'name.regex' => 'Farm name field must only contain alpha-numeric characters',
-            'name.string' => 'Farm name field must be string',
-            'address.required' => 'Farm address field is required',
-            'coordinates.string' => 'The coordinates field must be a string.',
+            'name.required' => 'Turbine name field is required',
+            'name.regex' => 'Turbine name field must only contain alpha-numeric characters',
+            'name.string' => 'Turbine name field must be string',
+            'address.required' => 'Turbine address field is required',
+            'location.string' => 'The coordinates field must be a string.',
+            'farm_id.required' => 'A turbine must belong to a farm'
         ];
     }
 }

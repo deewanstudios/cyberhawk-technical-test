@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\TurbineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,13 @@ Route::prefix("farms")->group(function () {
     Route::put("/{farm}", [FarmController::class, 'update']);
     Route::patch("/{farm}", [FarmController::class, 'edit']);
     Route::delete("/{farm}", [FarmController::class, 'delete']);
+});
+
+Route::prefix("turbines")->group(function () {
+    Route::post("/", [TurbineController::class, 'store']);
+    Route::put("/{turbine}", [TurbineController::class, 'update']);
+    Route::patch("/{turbine}", [TurbineController::class, 'edit']);
+    Route::delete("/{turbine}", [TurbineController::class, 'delete']);
+    Route::get("/", [TurbineController::class, 'allTurbines']);
+    Route::get("/{turbine}", [TurbineController::class, 'show']);
 });

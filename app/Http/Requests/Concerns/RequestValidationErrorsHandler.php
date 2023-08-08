@@ -5,7 +5,7 @@ namespace App\Http\Requests\Concerns;
 use Illuminate\Contracts\Validation\Validator;
 use App\Exceptions\MissingInputException;
 
-trait FarmValidationErrorsHandler
+trait RequestValidationErrorsHandler
 {
 
     protected function failedValidation(Validator $validator)
@@ -19,7 +19,7 @@ trait FarmValidationErrorsHandler
         throw new MissingInputException($missingInputs);
     }
 
-    public function messages()
+    /* public function messages()
     {
         return [
             'name.required' => 'Farm name field is required',
@@ -28,5 +28,5 @@ trait FarmValidationErrorsHandler
             'address.required' => 'Farm address field is required',
             'coordinates.string' => 'The coordinates field must be a string.',
         ];
-    }
+    } */
 }

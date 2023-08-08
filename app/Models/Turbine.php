@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Farm extends Model
+class Turbine extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        "address",
-        "coordinates",
-        "capacity",
-        "launched_date",
+        'name',
+        'description',
+        'location',
+        'farm_id',
+        'install_date',
         'status'
     ];
 
-    public function turbines()
+    public function farm()
     {
-        return $this->hasMany(Turbine::class);
+        return $this->belongsTo(Farm::class);
     }
 }
