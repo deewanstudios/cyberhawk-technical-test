@@ -16,11 +16,11 @@ class CRUDController extends Controller
         $this->crudService = $crudService;
     }
 
-    public function processStore(FormRequest $request, $createdObjectType)
+    public function create(FormRequest $request, $createdObjectType)
     {
         $data = $this->crudService->store($request->validated());
         return response()->json([
-            'message' => 'New ' . $createdObjectType . ' Entity Created Successfully!',
+            'message' => "New {$createdObjectType} Entity Created Successfully!",
             'data' => $data
         ], 201);
     }

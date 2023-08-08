@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
             return $exception->renderMissingExceptionError();
         }
 
-        if ($exception instanceof ValidationException && $request->expctsJson()) {
+        if ($exception instanceof ValidationException && $request->expectsJson()) {
             return response()->json([
                 'error' => $this->validationError,
                 'messages' => $exception->errors()

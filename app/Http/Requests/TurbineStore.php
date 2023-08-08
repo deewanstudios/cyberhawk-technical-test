@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 
 class TurbineStore extends FormRequest
 {
+    use RequestValidationErrorsHandler;
 
 
     /**

@@ -2,15 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Exceptions\MissingInputException;
-use Illuminate\Validation\Rule;
-use App\Http\Requests\Concerns\FarmValidationErrorsHandler;
+use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 
 class FarmStore extends FormRequest
 {
-    use FarmValidationErrorsHandler;
+    use RequestValidationErrorsHandler;
     /**
      * Determine if the user is authorized to make this request.
      *

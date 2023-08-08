@@ -5,7 +5,7 @@ namespace App\Http\Requests\Concerns;
 use Illuminate\Contracts\Validation\Validator;
 use App\Exceptions\MissingInputException;
 
-trait FarmValidationErrorsHandler
+trait RequestValidationErrorsHandler
 {
 
     protected function failedValidation(Validator $validator)

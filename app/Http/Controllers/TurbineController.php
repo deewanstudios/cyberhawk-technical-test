@@ -28,6 +28,6 @@ class TurbineController extends CRUDController
     public function store(TurbineStore $request)
     {
         $createdObjectType = "Turbine";
-        return parent::processStore($request, $createdObjectType);
+        return parent::create($request, $createdObjectType);
     }
 }

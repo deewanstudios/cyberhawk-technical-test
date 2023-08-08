@@ -15,10 +15,4 @@ class TurbineService extends CRUDService
     {
         parent::__construct(new Turbine());
     }
-
-    /* public function getAll()
-    {
-        return parent::getAll();
-    } */
-
 }
