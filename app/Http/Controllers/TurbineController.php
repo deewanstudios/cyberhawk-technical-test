@@ -32,4 +32,9 @@ class TurbineController extends CRUDController
     {
         return parent::updateAll($request, $turbine, $this->createdObjectType);
     }
+
+    public function delete(Turbine $turbine)
+    {
+        return parent::destroy($turbine, $this->createdObjectType);
+    }
 }

@@ -7,6 +7,7 @@ use Tests\TestCase;
 use App\Models\Farm;
 use App\Models\Turbine;
 use App\Http\Requests\TurbineStore;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -57,9 +58,9 @@ class TurbineControllerTest extends TestCase
 
         Turbine::where('id', $turbine->id)->update($updateTurbineData);
         $response = $this->putJson($this->endpoint . '/' . $turbine->id, $updateTurbineData);
-        $response->assertStatus(200);
         $updatedTurbine =  Turbine::find($turbine->id);
-        $response->assertJson([
+        $response->assertStatus(200);
+        $response->assertExactJson([
             'message' => 'Turbine Update Operation Was Successfull!',
             'data' => $updatedTurbine->toArray()
         ]);
@@ -76,7 +77,7 @@ class TurbineControllerTest extends TestCase
         $response = $this->patchJson($this->endpoint . '/' . $turbine['id'], $patchData);
         $response->assertStatus(200);
         $patchedTurbine = Turbine::findOrFail($turbine->id);
-        $response->assertJson(
+        $response->assertExactJson(
             [
 
                 'message' => 'Turbine Patch Operation Was Successfull!',
@@ -84,4 +85,19 @@ class TurbineControllerTest extends TestCase
             ]
         );
     }
+
+    public function testTurbineDelete()
+    {
+        $turbine = Turbine::factory()->create();
+        $response = $this->delete($this->endpoint . '/' . $turbine->id);
+        $response->assertStatus(200);
+        $response->assertExactJson([
+            'message' => "Turbine Delete Operation Was Successfull!",
+        ]);
+        $this->assertDatabaseMissing('turbines', ['id' => $turbine->id]);
+    }
+
+    /*  public function test{
+
+    } */
 }

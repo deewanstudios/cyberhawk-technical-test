@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Services\CRUDService;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CRUDController extends Controller
@@ -17,31 +18,39 @@ class CRUDController extends Controller
         $this->crudService = $crudService;
     }
 
-    public function create(FormRequest $request, $createdObjectType)
+    public function create(FormRequest $request, $updatedOobjectTypejectType)
     {
         $data = $this->crudService->store($request->validated());
         return response()->json([
-            'message' => "New {$createdObjectType} Entity Created Successfully!",
+            'message' => "New {$objectType} Entity Created Successfully!",
             'data' => $data
         ], 201);
     }
 
-    public function updateAll(FormRequest $request, Model $model, $updatedObjectType)
+    public function updateAll(FormRequest $request, Model $model, $objectType)
     {
         $model->update($request->validated());
         $data = $this->crudService->update($model);
         return response()->json([
-            'message' => "{$updatedObjectType} Update Operation Was Successfull!",
+            'message' => "{$objectType} Update Operation Was Successfull!",
             'data' => $data
         ]);
     }
 
-    public function patch(FormRequest $request, $id, $updatedObjectType)
+    public function patch(FormRequest $request, $id, $objectType)
     {
         $data = $this->crudService->edit($id, $request->validated());
         return response()->json([
-            'message' => "{$updatedObjectType} Patch Operation Was Successfull!",
+            'message' => "{$objectType} Patch Operation Was Successfull!",
             'data' => $data
+        ]);
+    }
+
+    public function destroy(Model $model, $objectType)
+    {
+        $this->crudService->destroy($model);
+        return response()->json([
+            'message' => "{$objectType} Delete Operation Was Successfull!",
         ]);
     }
 }

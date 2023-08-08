@@ -39,6 +39,11 @@ class CRUDService
         return $object;
     }
 
+    public function destroy(Model $model)
+    {
+        return $model->delete();
+    }
+
     public function getAll()
     {
         return $this->model::all();
