@@ -14,9 +14,15 @@ class TurbineControllerTest extends TestCase
 
     protected $endpoint = 'api/turbines';
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->withoutExceptionHandling();
+    }
+
     public function testCreateTurbine()
     {
-        $this->withoutExceptionHandling();
+        // $this->withoutExceptionHandling();
         $validTurbineData = Turbine::factory()->make()->toArray();
         $response = $this->postJson($this->endpoint, $validTurbineData);
         $response->assertStatus(201);
@@ -27,5 +33,25 @@ class TurbineControllerTest extends TestCase
             ]
         );
         $this->assertDatabaseHas('turbines', $validTurbineData);
+    }
+
+    public function testTurbinePatch()
+    {
+        $turbine = Turbine::factory()->create();
+        $patchData = [
+            'name' => 'Turbine Name Patch',
+            'description' => 'Turbine Description Patch'
+        ];
+        Turbine::where('id', $turbine->id)->update($patchData);
+        $response = $this->patchJson($this->endpoint . '/' . $turbine['id'], $patchData);
+        $response->assertStatus(200);
+        $patchedTurbine = Turbine::findOrFail($turbine->id);
+        $response->assertJson(
+            [
+
+                'message' => 'Turbine Patch Operation Was Successfull!',
+                'data' => $patchedTurbine->toArray()
+            ]
+        );
     }
 }

@@ -24,6 +24,14 @@ class CRUDService
         return $this->model::create($data);
     }
 
+    public function edit($id, array $data)
+    {
+        $object = $this->model::findOrFail($id);
+        $object->fill($data);
+        $object->save();
+        return $object;
+    }
+
     public function getAll()
     {
         return $this->model::all();

@@ -2,32 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\TurbineService;
-use App\Http\Requests\TurbineStore;
+use App\Models\Turbine;
 use Illuminate\Http\Request;
+use App\Services\TurbineService;
+use App\Http\Requests\TurbinePatch;
+use App\Http\Requests\TurbineStore;
+use Illuminate\Foundation\Http\FormRequest;
 
 class TurbineController extends CRUDController
 {
     //
-    public function __construct(TurbineService $turbineService, TurbineStore $request)
+    private $createdObjectType;
+    public function __construct(TurbineService $turbineService, FormRequest $request)
     {
         parent::__construct($turbineService, $request);
+        $this->createdObjectType = 'Turbine';
     }
-
-    /* public function getCrudService()
-    {
-        return app(TurbineService::class);
-    }
- */
-    /* public function store(TurbineStore $request)
-    {
-        return parent::store($request);
-    }
-    */
-
     public function store(TurbineStore $request)
     {
-        $createdObjectType = "Turbine";
-        return parent::create($request, $createdObjectType);
+        return parent::create($request, $this->createdObjectType);
+    }
+
+    public function edit(TurbinePatch $request, Turbine $turbine)
+    {
+        return parent::patch($request, $turbine->id, $this->createdObjectType);
     }
 }

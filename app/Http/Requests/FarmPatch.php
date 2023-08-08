@@ -3,12 +3,12 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Http\Requests\Concerns\FarmValidationErrorsHandler;
+use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 
 class FarmPatch extends FormRequest
 {
 
-    use FarmValidationErrorsHandler;
+    use RequestValidationErrorsHandler;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -34,6 +34,17 @@ class FarmPatch extends FormRequest
             'capacity' => 'sometimes|required|numeric|integer',
             'launched_date' => 'sometimes|required|date|date_format:Y-m-d',
             'status' => 'sometimes|required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Farm name field is required',
+            'name.regex' => 'Farm name field must only contain alpha-numeric characters',
+            'name.string' => 'Farm name field must be string',
+            'address.required' => 'Farm address field is required',
+            'coordinates.string' => 'The coordinates field must be a string.',
         ];
     }
 }

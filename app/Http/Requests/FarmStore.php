@@ -35,4 +35,15 @@ class FarmStore extends FormRequest
             'status' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Farm name field is required',
+            'name.regex' => 'Farm name field must only contain alpha-numeric characters',
+            'name.string' => 'Farm name field must be string',
+            'address.required' => 'Farm address field is required',
+            'coordinates.string' => 'The coordinates field must be a string.',
+        ];
+    }
 }

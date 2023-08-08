@@ -24,4 +24,13 @@ class CRUDController extends Controller
             'data' => $data
         ], 201);
     }
+
+    public function patch(FormRequest $request, $id, $updatedObjectType)
+    {
+        $data = $this->crudService->edit($id, $request->validated());
+        return response()->json([
+            'message' => "{$updatedObjectType} Patch Operation Was Successfull!",
+            'data' => $data
+        ]);
+    }
 }

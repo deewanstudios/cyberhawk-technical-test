@@ -19,7 +19,7 @@ trait RequestValidationErrorsHandler
         throw new MissingInputException($missingInputs);
     }
 
-    public function messages()
+    /* public function messages()
     {
         return [
             'name.required' => 'Farm name field is required',
@@ -28,5 +28,5 @@ trait RequestValidationErrorsHandler
             'address.required' => 'Farm address field is required',
             'coordinates.string' => 'The coordinates field must be a string.',
         ];
-    }
+    } */
 }
