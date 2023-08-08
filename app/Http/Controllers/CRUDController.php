@@ -18,7 +18,7 @@ class CRUDController extends Controller
         $this->crudService = $crudService;
     }
 
-    public function create(FormRequest $request, $updatedOobjectTypejectType)
+    public function create(FormRequest $request, $objectType)
     {
         $data = $this->crudService->store($request->validated());
         return response()->json([
@@ -52,5 +52,15 @@ class CRUDController extends Controller
         return response()->json([
             'message' => "{$objectType} Delete Operation Was Successfull!",
         ]);
+    }
+
+    public function all()
+    {
+        return $this->crudService->getAll();
+    }
+
+    public function single($id)
+    {
+        return $this->crudService->getById($id);
     }
 }

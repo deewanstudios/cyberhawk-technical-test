@@ -12,6 +12,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class TurbineController extends CRUDController
 {
     //
+    // protected $service;
     private $createdObjectType;
     public function __construct(TurbineService $turbineService, FormRequest $request)
     {
@@ -36,5 +37,15 @@ class TurbineController extends CRUDController
     public function delete(Turbine $turbine)
     {
         return parent::destroy($turbine, $this->createdObjectType);
+    }
+
+    public function allTurbines()
+    {
+        return parent::all();
+    }
+
+    public function show(Turbine $turbine)
+    {
+        return parent::single($turbine->id);
     }
 }

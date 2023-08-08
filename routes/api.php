@@ -35,4 +35,6 @@ Route::prefix("turbines")->group(function () {
     Route::put("/{turbine}", [TurbineController::class, 'update']);
     Route::patch("/{turbine}", [TurbineController::class, 'edit']);
     Route::delete("/{turbine}", [TurbineController::class, 'delete']);
+    Route::get("/", [TurbineController::class, 'allTurbines']);
+    Route::get("/{turbine}", [TurbineController::class, 'show']);
 });

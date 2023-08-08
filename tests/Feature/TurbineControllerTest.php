@@ -97,7 +97,20 @@ class TurbineControllerTest extends TestCase
         $this->assertDatabaseMissing('turbines', ['id' => $turbine->id]);
     }
 
-    /*  public function test{
+    public function testgetAll()
+    {
+        $turbines = Turbine::factory()->count(5)->create();
+        $response = $this->getJson($this->endpoint);
+        $response->assertStatus(200);
+        $response->assertJsonCount(5);
+        $response->assertJson($turbines->toArray());
+    }
 
-    } */
+    public function testGetOne()
+    {
+        $turbine = Turbine::factory()->create();
+        $response =  $this->getJson($this->endpoint . '/' . $turbine->id);
+        $response->assertStatus(200);
+        $response->assertJson($turbine->toArray());
+    }
 }
