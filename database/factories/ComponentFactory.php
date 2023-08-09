@@ -16,11 +16,14 @@ class ComponentFactory extends Factory
      */
     public function definition()
     {
+        $min = config('testing.min_value');
+        $max = config('testing.max_value');
+
         return [
             //
             'name' => $this->faker->unique()->word,
             'description' => $this->faker->sentence,
-            'quantity' => $this->faker->numerify
+            'quantity' => $this->faker->numberBetween($min, $max)
         ];
     }
 }

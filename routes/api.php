@@ -38,3 +38,12 @@ Route::prefix("turbines")->group(function () {
     Route::get("/", [TurbineController::class, 'allTurbines']);
     Route::get("/{turbine}", [TurbineController::class, 'show']);
 });
+
+Route::prefix("components")->group(function () {
+    Route::post("/", [TurbineController::class, 'store']);
+    Route::put("/{component}", [TurbineController::class, 'update']);
+    Route::patch("/{component}", [TurbineController::class, 'edit']);
+    Route::delete("/{component}", [TurbineController::class, 'delete']);
+    Route::get("/", [TurbineController::class, 'allComponents']);
+    Route::get("/{component}", [TurbineController::class, 'show']);
+});

@@ -10,7 +10,8 @@ class Component extends Model
     use HasFactory;
 
     protected $fillable = [
-
-
+        'name',
+        'description',
+        'quantity'
     ];
 }
