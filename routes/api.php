@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\ComponentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FarmController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\TurbineController;
+use App\Http\Controllers\ComponentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,13 @@ Route::prefix("components")->group(function () {
     Route::delete("/{component}", [ComponentController::class, 'delete']);
     Route::get("/", [ComponentController::class, 'allComponents']);
     Route::get("/{component}", [ComponentController::class, 'show']);
+});
+
+Route::prefix("grades")->group(function () {
+    Route::post("/", [GradeController::class, 'store']);
+    Route::put("/{grade}", [GradeController::class, 'update']);
+    Route::patch("/{grade}", [GradeController::class, 'edit']);
+    Route::delete("/{grade}", [GradeController::class, 'delete']);
+    Route::get("/", [GradeController::class, 'allGrades']);
+    Route::get("/{grade}", [GradeController::class, 'show']);
 });
