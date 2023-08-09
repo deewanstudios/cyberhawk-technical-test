@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ComponentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FarmController;
@@ -40,10 +41,10 @@ Route::prefix("turbines")->group(function () {
 });
 
 Route::prefix("components")->group(function () {
-    Route::post("/", [TurbineController::class, 'store']);
-    Route::put("/{component}", [TurbineController::class, 'update']);
-    Route::patch("/{component}", [TurbineController::class, 'edit']);
-    Route::delete("/{component}", [TurbineController::class, 'delete']);
-    Route::get("/", [TurbineController::class, 'allComponents']);
-    Route::get("/{component}", [TurbineController::class, 'show']);
+    Route::post("/", [ComponentController::class, 'store']);
+    Route::put("/{component}", [ComponentController::class, 'update']);
+    Route::patch("/{component}", [ComponentController::class, 'edit']);
+    Route::delete("/{component}", [ComponentController::class, 'delete']);
+    Route::get("/", [ComponentController::class, 'allComponents']);
+    Route::get("/{component}", [ComponentController::class, 'show']);
 });

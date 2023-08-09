@@ -3,10 +3,11 @@
 namespace Tests\Feature;
 
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Component;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Http\Requests\ComponentStore;
 
 class ComponentControllerTest extends TestCase
 {
@@ -30,7 +31,7 @@ class ComponentControllerTest extends TestCase
                 'data' => $validComponentData
             ]
         );
-        $this->assertDatabaseHas('Components', $validComponentData);
+        $this->assertDatabaseHas('components', $validComponentData);
     }
 
     public function testComponentUpdate()
@@ -59,6 +60,7 @@ class ComponentControllerTest extends TestCase
         $component = Component::factory()->create();
         $patchData = [
             'name' => 'Component Name Patch',
+            'quantity' => 2,
             'description' => 'Component Description Patch'
         ];
         Component::where('id', $component->id)->update($patchData);
@@ -82,7 +84,7 @@ class ComponentControllerTest extends TestCase
         $response->assertExactJson([
             'message' => "Component Delete Operation Was Successfull!",
         ]);
-        $this->assertDatabaseMissing('Components', ['id' => $component->id]);
+        $this->assertDatabaseMissing('components', ['id' => $component->id]);
     }
 
     public function testgetAll()

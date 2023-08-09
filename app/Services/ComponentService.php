@@ -13,6 +13,6 @@ class ComponentService extends CRUDService
 
     public function __construct()
     {
-        parent::__construct(new Component);
+        parent::__construct(new Component());
     }
 }
