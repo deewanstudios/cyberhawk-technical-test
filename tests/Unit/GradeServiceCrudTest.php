@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use App\Models\Grade;
 use App\Services\GradeService;
 use Tests\CRUDServiceTestCase;
-use PHPUnit\Framework\TestCase;
 use Database\Factories\GradeFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
