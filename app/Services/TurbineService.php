@@ -15,4 +15,10 @@ class TurbineService extends CRUDService
     {
         parent::__construct(new Turbine());
     }
+
+    public function getWithRelationships()
+    {
+        $turbines = Turbine::with('components.grade')->get();
+        return response()->json($turbines);
+    }
 }

@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Component;
+use App\Models\Grade;
+use App\Models\Turbine;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +19,13 @@ class TurbineComponentFactory extends Factory
      */
     public function definition()
     {
+
+        // $turbineId = Turbine::factory()->create()->id;
         return [
             //
+            'turbine_id' => Turbine::factory()->create()->id,
+            'component_id' => Component::factory()->create()->id,
+            'grade_id' => Grade::factory()->create()->id,
         ];
     }
 }

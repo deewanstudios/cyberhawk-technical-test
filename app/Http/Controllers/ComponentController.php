@@ -16,7 +16,7 @@ class ComponentController extends CRUDController
 
     public function __construct(ComponentService $componentService, FormRequest $request)
     {
-        parent::__construct($componentService, $request);
+        parent::__construct($componentService);
         $this->objectType = 'Component';
     }
 

@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TurbineComponent extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'turbine_id',
+        'component_id',
+        'grade_id'
+    ];
 }
