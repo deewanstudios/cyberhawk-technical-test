@@ -13,4 +13,14 @@ class Grade extends Model
         'value',
         'description'
     ];
+
+    public function turbineComponents()
+    {
+        return $this->hasMany(TurbineComponent::class);
+    }
+
+    public function components()
+    {
+        return $this->hasMany(Component::class);
+    }
 }

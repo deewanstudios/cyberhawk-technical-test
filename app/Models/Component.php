@@ -14,4 +14,15 @@ class Component extends Model
         'description',
         'quantity'
     ];
+
+    public function turbines()
+    {
+        return $this->belongsToMany(Turbine::class, 'turbine_components')
+            ->withPivot('grade_id');
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

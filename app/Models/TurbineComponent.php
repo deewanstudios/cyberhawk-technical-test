@@ -14,4 +14,19 @@ class TurbineComponent extends Model
         'component_id',
         'grade_id'
     ];
+
+    public function turbine()
+    {
+        return $this->belongsTo(Turbine::class);
+    }
+
+    public function component()
+    {
+        return $this->belongsTo(Component::class);
+    }
+
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
 }

@@ -21,4 +21,9 @@ class TurbineService extends CRUDService
         $turbines = Turbine::with('components.grade')->get();
         return response()->json($turbines);
     }
+    public function getATurbineWithRelationships($id)
+    {
+        $turbine = Turbine::with('components.grade')->where('id', $id)->get();
+        return response()->json($turbine);
+    }
 }

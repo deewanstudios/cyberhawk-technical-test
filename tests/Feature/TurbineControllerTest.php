@@ -2,18 +2,22 @@
 
 namespace Tests\Feature;
 
+use App\Models\Component;
+use App\Models\Grade;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\Farm;
 use App\Models\Turbine;
 use App\Http\Requests\TurbineStore;
+use App\Models\TurbineComponent;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TurbineControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker, DatabaseTransactions;
 
     protected $endpoint = 'api/turbines';
 
@@ -58,7 +62,7 @@ class TurbineControllerTest extends TestCase
 
         Turbine::where('id', $turbine->id)->update($updateTurbineData);
         $response = $this->putJson($this->endpoint . '/' . $turbine->id, $updateTurbineData);
-        $updatedTurbine =  Turbine::find($turbine->id);
+        $updatedTurbine = Turbine::find($turbine->id);
         $response->assertStatus(200);
         $response->assertExactJson([
             'message' => 'Turbine Update Operation Was Successfull!',
@@ -108,9 +112,22 @@ class TurbineControllerTest extends TestCase
 
     public function testGetOne()
     {
+
         $turbine = Turbine::factory()->create();
-        $response =  $this->getJson($this->endpoint . '/' . $turbine->id);
+        $component1 = TurbineComponent::factory()->create(['turbine_id' => $turbine->id]);
+        $component2 = TurbineComponent::factory()->create(['turbine_id' => $turbine->id]);
+
+        $grade1 = Grade::factory()->create(['id' => 1]);
+        $grade2 = Grade::factory()->create(['id' => 4]);
+
+        $component1->grade()->associate($grade1)->save();
+        $component2->grade()->associate($grade2)->save();
+        $response = $this->getJson($this->endpoint . '/' . $turbine->id);
         $response->assertStatus(200);
-        $response->assertJson($turbine->toArray());
+        $expectedTurbine = $turbine->toArray();
+        // Add components relationship to the turbine
+        $expectedTurbine['components'] = $turbine->components->toArray();
+        $response->assertJson([$expectedTurbine]);
     }
+
 }

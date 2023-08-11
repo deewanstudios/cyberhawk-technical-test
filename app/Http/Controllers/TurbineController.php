@@ -43,15 +43,12 @@ class TurbineController extends CRUDController
 
     public function allTurbines()
     {
-        // return parent::all();
-        /*  $turbines = Turbine::with('components.grade')->get();
-         return response()->json($turbines); */
 
         return $this->service->getWithRelationships();
     }
 
     public function show(Turbine $turbine)
     {
-        return parent::single($turbine->id);
+        return $this->service->getATurbineWithRelationships($turbine->id);
     }
 }

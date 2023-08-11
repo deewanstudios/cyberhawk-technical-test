@@ -26,7 +26,7 @@ class GradePatch extends FormRequest
         return [
             //
             'value' => 'sometimes|required|numeric',
-            'description' => 'sometimes|required|string|alpha|'
+            'description' => 'sometimes|required|string'
         ];
     }
 }
