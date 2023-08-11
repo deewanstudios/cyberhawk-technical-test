@@ -26,7 +26,7 @@ class GradeStore extends FormRequest
         return [
             //
             'value' => 'required|numeric',
-            'description' => 'required|string|alpha|'
+            'description' => 'required|string'
         ];
     }
 }

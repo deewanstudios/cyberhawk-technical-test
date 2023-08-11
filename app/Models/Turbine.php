@@ -22,4 +22,16 @@ class Turbine extends Model
     {
         return $this->belongsTo(Farm::class);
     }
+
+    public function components()
+    {
+        return $this->belongsToMany(Component::class, 'turbine_components')
+            ->withPivot('grade_id');
+    }
+
+
+    public function turbineComponents()
+    {
+        return $this->hasMany(TurbineComponent::class);
+    }
 }

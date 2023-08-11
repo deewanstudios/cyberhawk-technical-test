@@ -2,8 +2,11 @@
 
 namespace Tests\Unit;
 
+use App\Models\Component;
+use App\Models\Grade;
 use Tests\TestCase;
 use App\Models\Turbine;
+use App\Models\TurbineComponent;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -82,4 +85,30 @@ class TurbineTest extends TestCase
         Turbine::destroy($turbine->id);
         $this->assertDatabaseMissing('turbines', ['id' => $turbine->id]);
     }
+
+
+    public function testTurbineComponents()
+    {
+        // Create a turbine instance with associated components
+        $turbine = Turbine::factory()
+            ->has(TurbineComponent::factory()->count(2)) // Create 2 associated components
+            ->create();
+
+        // Retrieve the turbine components through relationship
+        $turbineComponents = $turbine->turbineComponents;
+
+        $this->assertInstanceOf(\Illuminate\Database\Eloquent\Collection::class, $turbineComponents);
+        $this->assertCount(2, $turbineComponents);
+
+        foreach ($turbineComponents as $turbineComponent) {
+            $this->assertInstanceOf(TurbineComponent::class, $turbineComponent);
+            $this->assertInstanceOf(Component::class, $turbineComponent->component);
+            $this->assertInstanceOf(Grade::class, $turbineComponent->grade);
+            $this->assertNotEmpty($turbineComponent->component->name);
+            $this->assertNotEmpty($turbineComponent->grade->value);
+        }
+    }
+
+
+
 }

@@ -14,10 +14,12 @@ class TurbineController extends CRUDController
     //
     // protected $service;
     private $createdObjectType;
+    private $service;
     public function __construct(TurbineService $turbineService, FormRequest $request)
     {
-        parent::__construct($turbineService, $request);
+        parent::__construct($turbineService);
         $this->createdObjectType = 'Turbine';
+        $this->service = new TurbineService();
     }
     public function store(TurbineStore $request)
     {
@@ -29,7 +31,7 @@ class TurbineController extends CRUDController
         return parent::patch($request, $turbine->id, $this->createdObjectType);
     }
 
-    public function update(TurbineStore $request,  Turbine $turbine)
+    public function update(TurbineStore $request, Turbine $turbine)
     {
         return parent::updateAll($request, $turbine, $this->createdObjectType);
     }
@@ -41,11 +43,12 @@ class TurbineController extends CRUDController
 
     public function allTurbines()
     {
-        return parent::all();
+
+        return $this->service->getWithRelationships();
     }
 
     public function show(Turbine $turbine)
     {
-        return parent::single($turbine->id);
+        return $this->service->getATurbineWithRelationships($turbine->id);
     }
 }

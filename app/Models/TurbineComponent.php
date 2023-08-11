@@ -5,20 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Component extends Model
+class TurbineComponent extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'quantity'
+        'turbine_id',
+        'component_id',
+        'grade_id'
     ];
 
-    public function turbines()
+    public function turbine()
     {
-        return $this->belongsToMany(Turbine::class, 'turbine_components')
-            ->withPivot('grade_id');
+        return $this->belongsTo(Turbine::class);
+    }
+
+    public function component()
+    {
+        return $this->belongsTo(Component::class);
     }
 
     public function grade()
