@@ -126,7 +126,7 @@ class TurbineControllerTest extends TestCase
         $response->assertStatus(200);
         $expectedTurbine = $turbine->toArray();
         // Add components relationship to the turbine
-        $expectedTurbine['components'] = $turbine->components->toArray();
+        $expectedTurbine['turbine_components'] = $turbine->turbineComponents->toArray();
         $response->assertJson([$expectedTurbine]);
     }
 

@@ -17,10 +17,10 @@ class InspectionFactory extends Factory
      */
     public function definition()
     {
-        $date = rand(config('testing.start_date'), config('testing.end_date'));
+        $date = rand(config('testing.start_date'), intval(config('testing.end_date')));
         return [
             //
-            'turbine_id' => Turbine::inRandomOrder()->first()->id,
+            'turbine_id' => Turbine::factory()->create()->id,
             'inspection_date' => $this->faker->dateTime($date),
             'grade' => $this->faker->numberBetween(1, 5)
         ];

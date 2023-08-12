@@ -11,7 +11,7 @@ class Inspection extends Model
 
     protected $fillable = [
         'turbine_id',
-        'ispected_date',
+        'inspection_date',
         'grade'
     ];
 }
