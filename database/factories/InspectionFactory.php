@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Turbine;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class InspectionFactory extends Factory
         return [
             //
             'turbine_id' => Turbine::factory()->create()->id,
-            'inspection_date' => $this->faker->dateTime($date),
+            'inspection_date' => Carbon::create($date)->format('Y-m-d H:i:s'),
             'grade' => $this->faker->numberBetween(1, 5)
         ];
     }

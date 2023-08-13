@@ -6,6 +6,7 @@ use App\Http\Controllers\FarmController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\TurbineController;
 use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\API\InspectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,13 @@ Route::prefix("grades")->group(function () {
     Route::delete("/{grade}", [GradeController::class, 'delete']);
     Route::get("/", [GradeController::class, 'allGrades']);
     Route::get("/{grade}", [GradeController::class, 'show']);
+});
+
+Route::prefix("inspections")->group(function () {
+    Route::post("/", [InspectionController::class, 'store']);
+    Route::put("/{inspection}", [InspectionController::class, 'update']);
+    Route::patch("/{inspection}", [InspectionController::class, 'edit']);
+    Route::delete("/{inspection}", [InspectionController::class, 'delete']);
+    Route::get("/", [InspectionController::class, 'allGrades']);
+    Route::get("/{inspection}", [InspectionController::class, 'show']);
 });
