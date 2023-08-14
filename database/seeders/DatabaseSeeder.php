@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Component;
 use App\Models\Grade;
+use App\Models\Inspection;
 use App\Models\Turbine;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,25 +18,53 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Create grades with values from 1 to 5
-        for ($value = 1; $value <= 5; $value++) {
+        $gradeDescriptions = [
+            'Excellent',
+            'Very Good',
+            'Good',
+            'Fair',
+            'Damaged',
+        ];
+
+        // Create grades with custom descriptions
+        foreach ($gradeDescriptions as $value => $description) {
             Grade::create([
-                'value' => $value,
-                'description' => "Grade $value description",
+                'value' => $value + 1,
+                'description' => $description,
             ]);
+        }
+
+        // Create components
+        $componentNames = [
+            'Rotor Blades',
+            'Rotor Hub',
+            'Gearbox',
+            'Generator',
+            'Nacelle',
+            'Wind Vane',
+            'Brakes',
+            'Tower',
+        ];
+
+        $components = [];
+        foreach ($componentNames as $name) {
+            $components[$name] = Component::create(['name' => $name]);
         }
 
         // Create turbines
         $turbines = Turbine::factory(10)->create();
 
-        // Create components and associate with turbines
+        // Create inspections for each turbine
         foreach ($turbines as $turbine) {
-            $components = Component::factory(2)->create();
-            $grades = Grade::all()->random(2); // Randomly select two grades
-
-            foreach ($components as $key => $component) {
-                $turbine->components()->attach($component, ['grade_id' => $grades[$key]->id]);
+            foreach ($components as $component) {
+                $turbine->components()->attach($component, [
+                    'grade_id' => Grade::all()->random()->id,
+                ]);
             }
+
+            Inspection::factory(3)->create([
+                'turbine_id' => $turbine->id,
+            ]);
         }
 
     }

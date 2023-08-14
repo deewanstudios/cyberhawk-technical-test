@@ -5,11 +5,9 @@ namespace App\Http\Requests;
 use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ComponentPatch extends FormRequest
+class InspectionPatch extends FormRequest
 {
-
     use RequestValidationErrorsHandler;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,9 +27,9 @@ class ComponentPatch extends FormRequest
     {
         return [
             //
-            'name' => 'required',
-            'description' => 'sometimes',
-            'quantity' => 'required|numeric'
+            'turbine_id' => 'sometimes|required|numeric',
+            'inspection_date' => 'sometimes|required',
+            'grade' => 'sometimes|required|numeric'
         ];
     }
 }

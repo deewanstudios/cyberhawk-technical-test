@@ -12,11 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('components', function (Blueprint $table) {
+        Schema::create('inspections', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('description', 255)->nullable();
-            $table->integer('quantity')->nullable();
+            $table->foreignId('turbine_id')->constrained()->onDelete('cascade');
+            $table->dateTime('inspection_date');
+            $table->unsignedTinyInteger('grade');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('components');
+        Schema::dropIfExists('inspections');
     }
 };

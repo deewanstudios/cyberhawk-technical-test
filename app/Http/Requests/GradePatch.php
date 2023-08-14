@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 use Illuminate\Foundation\Http\FormRequest;
 
 class GradePatch extends FormRequest
 {
+    use RequestValidationErrorsHandler;
+
     /**
      * Determine if the user is authorized to make this request.
      *
