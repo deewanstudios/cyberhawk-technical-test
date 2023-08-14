@@ -48,6 +48,6 @@ class InspectionController extends CRUDController
 
     public function show(Inspection $inspection)
     {
-        return parent::single($inspection->id);
+        return $this->service->getAnInspectionWithRelationships($inspection->id);
     }
 }
