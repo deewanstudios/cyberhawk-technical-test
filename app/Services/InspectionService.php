@@ -19,7 +19,7 @@ class InspectionService extends CRUDService
 
     public function getAllWithRelationships()
     {
-        $inspectionsWithTurbines = Inspection::with(['turbine', 'turbine.components', 'turbine.components.grade'])->get();
+        $inspectionsWithTurbines = Inspection::with('turbine', 'turbine.components')->get();
 
         return response()->json($inspectionsWithTurbines);
     }
