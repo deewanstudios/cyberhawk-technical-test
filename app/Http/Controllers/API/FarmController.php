@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Exceptions\EmptyResponseException;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\FarmPatch;
 use App\Models\Farm;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 
 class FarmController extends Controller
 {
@@ -66,6 +69,12 @@ class FarmController extends Controller
         );
     }
 
+    /**
+     * Perform full update on a Farm entity
+     * @param \App\Http\Requests\FarmStore $farmStore
+     * @param \App\Models\Farm $farm
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function update(FarmStore $farmStore, Farm $farm)
     {
         $validateData = $farmStore->validated();
@@ -78,6 +87,12 @@ class FarmController extends Controller
         );
     }
 
+    /**
+     * Perform partial update on a Farm entity
+     * @param \App\Http\Requests\FarmPatch $farmPatch
+     * @param \App\Models\Farm $farm
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function edit(FarmPatch $farmPatch, Farm $farm)
     {
         $validateData = $farmPatch->validated();
@@ -90,6 +105,12 @@ class FarmController extends Controller
     }
 
 
+    /**
+     * Delete a Farm entity
+     * @param \App\Models\Farm $farm
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
     public function delete(Farm $farm)
     {
 
