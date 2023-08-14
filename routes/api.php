@@ -2,10 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FarmController;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\TurbineController;
-use App\Http\Controllers\ComponentController;
+use App\Http\Controllers\API\FarmController;
+use App\Http\Controllers\API\GradeController;
+use App\Http\Controllers\API\TurbineController;
+use App\Http\Controllers\API\ComponentController;
 use App\Http\Controllers\API\InspectionController;
 
 /*
