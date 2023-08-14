@@ -15,8 +15,8 @@ return new class extends Migration {
         Schema::create('components', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('description', 255);
-            $table->integer('quantity');
+            $table->string('description', 255)->nullable();
+            $table->integer('quantity')->nullable();
             $table->timestamps();
         });
     }

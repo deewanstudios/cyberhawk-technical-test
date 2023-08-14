@@ -12,11 +12,13 @@ use Illuminate\Foundation\Http\FormRequest;
 class InspectionController extends CRUDController
 {
     private $objectType;
+    private $service;
 
     public function __construct(InspectionService $inspectionService, FormRequest $request)
     {
         parent::__construct($inspectionService);
         $this->objectType = 'Inspection';
+        $this->service = new InspectionService();
     }
 
     public function store(InspectionStore $request)
@@ -24,28 +26,28 @@ class InspectionController extends CRUDController
         return parent::create($request, $this->objectType);
     }
 
-    public function update(InspectionStore $request, Inspection $component)
+    public function update(InspectionStore $request, Inspection $inspection)
     {
-        return parent::updateAll($request, $component, $this->objectType);
+        return parent::updateAll($request, $inspection, $this->objectType);
     }
 
-    public function edit(InspectionPatch $request, Inspection $component)
+    public function edit(InspectionPatch $request, Inspection $inspection)
     {
-        return parent::patch($request, $component->id, $this->objectType);
+        return parent::patch($request, $inspection->id, $this->objectType);
     }
 
-    public function delete(Inspection $component)
+    public function delete(Inspection $inspection)
     {
-        return parent::destroy($component, $this->objectType);
+        return parent::destroy($inspection, $this->objectType);
     }
 
-    public function allComponents()
+    public function allInspections()
     {
-        return parent::all();
+        return $this->service->getAllWithRelationships();
     }
 
-    public function show(Inspection $component)
+    public function show(Inspection $inspection)
     {
-        return parent::single($component->id);
+        return parent::single($inspection->id);
     }
 }

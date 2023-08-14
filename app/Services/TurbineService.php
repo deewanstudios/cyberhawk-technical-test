@@ -18,12 +18,12 @@ class TurbineService extends CRUDService
 
     public function getWithRelationships()
     {
-        $turbines = Turbine::with('turbineComponents.grade')->get();
+        $turbines = Turbine::with('turbineComponents.grade', 'turbineComponents.component')->get();
         return response()->json($turbines);
     }
     public function getATurbineWithRelationships($id)
     {
-        $turbine = Turbine::with('turbineComponents.grade')->where('id', $id)->get();
+        $turbine = Turbine::with('turbineComponents.grade', 'turbineComponents.component')->where('id', $id)->get();
         return response()->json($turbine);
     }
 }

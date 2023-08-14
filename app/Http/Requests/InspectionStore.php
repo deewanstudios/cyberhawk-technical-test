@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InspectionStore extends FormRequest
 {
+    use RequestValidationErrorsHandler;
+    
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,9 +28,9 @@ class InspectionStore extends FormRequest
     {
         return [
             //
-            'turbine_id'=>'required|numeric',
-            'inspection_date'=>'required',
-            'grade'=>'required|numeric'
+            'turbine_id' => 'required|numeric',
+            'inspection_date' => 'required',
+            'grade' => 'required|numeric'
         ];
     }
 }

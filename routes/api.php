@@ -65,6 +65,6 @@ Route::prefix("inspections")->group(function () {
     Route::put("/{inspection}", [InspectionController::class, 'update']);
     Route::patch("/{inspection}", [InspectionController::class, 'edit']);
     Route::delete("/{inspection}", [InspectionController::class, 'delete']);
-    Route::get("/", [InspectionController::class, 'allGrades']);
+    Route::get("/", [InspectionController::class, 'allInspections']);
     Route::get("/{inspection}", [InspectionController::class, 'show']);
 });

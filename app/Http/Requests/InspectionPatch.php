@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\RequestValidationErrorsHandler;
 use Illuminate\Foundation\Http\FormRequest;
 
 class InspectionPatch extends FormRequest
 {
+    use RequestValidationErrorsHandler;
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +15,7 @@ class InspectionPatch extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +27,9 @@ class InspectionPatch extends FormRequest
     {
         return [
             //
+            'turbine_id' => 'sometimes|required|numeric',
+            'inspection_date' => 'sometimes|required',
+            'grade' => 'sometimes|required|numeric'
         ];
     }
 }

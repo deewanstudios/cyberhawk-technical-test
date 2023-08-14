@@ -25,4 +25,5 @@ class Component extends Model
     {
         return $this->belongsTo(Grade::class);
     }
+    
 }

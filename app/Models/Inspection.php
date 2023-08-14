@@ -14,4 +14,11 @@ class Inspection extends Model
         'inspection_date',
         'grade'
     ];
+
+
+    public function turbine()
+    {
+        return $this->belongsTo(Turbine::class);
+    }
+
 }

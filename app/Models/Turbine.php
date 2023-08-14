@@ -26,7 +26,8 @@ class Turbine extends Model
     public function components()
     {
         return $this->belongsToMany(Component::class, 'turbine_components')
-            ->withPivot('grade_id');
+            ->withPivot('grade_id')
+        ;
     }
 
 
