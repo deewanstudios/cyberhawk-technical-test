@@ -25,8 +25,7 @@ class FarmController extends CRUDController
 
     public function show(Farm $farm)
     {
-        $farm = parent::single($farm->id);
-        return view('farm', ['farm' => $farm]);
+        return view('farm', ['farm' => parent::single($farm->id)]);
     }
 
     public function farmTurbines(Farm $farm)

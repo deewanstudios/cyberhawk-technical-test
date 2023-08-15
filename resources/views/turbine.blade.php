@@ -434,99 +434,45 @@
 
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
-                    @foreach ($farms as $farm)
                     <div class="p-6">
                         <div class="flex items-center">
                             @php
-                            $iconColour =($farm->status==='Active')?
-                            '00ff00':(($farm->status==='Retired')?
+                            $iconColour =($turbine->status==='Active')?
+                            '00ff00':(($turbine->status==='Retired')?
                             '#ff0000':'#ffa500');
                             @endphp
-                            <i class="fa-solid fa-industry fa-2xl" style="color: {{$iconColour}}"></i>
+                            <i class="fa-solid fa-fan fa-2xl" style="color: {{$iconColour}}"></i>
                             <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="{{$farm->id}}"
-                                    class="underline text-gray-900 dark:text-white">{{$farm->name}}</a>
+                                <a href="{{$turbine->id}}"
+                                    class="underline text-gray-900 dark:text-white">{{$turbine->name}}</a>
                             </div>
                         </div>
 
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                {{$farm->address}}
+                                {{$turbine->description}}
                             </div>
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Coordinates: {{$farm->coordinates}}
-                            </div>
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                @php
-                                $tense = ($farm->capacity > 1)? 'Turbines':'Turbine';
-                                @endphp
-                                Capacity: {{$farm->capacity}} {{$tense}}
-                            </div>
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Status: {{$farm->status}}
+                                Coordinates: {{$turbine->location}}
                             </div>
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                 @php
-                                $date = ($farm->status ==="Under Construction")?'N/A':
-                                $farm->launched_date;
+                                $tense = ($turbine->capacity > 1)? 'Turbines':'Turbine';
                                 @endphp
-                                Launched: {{$date}}
+                                Capacity: {{$turbine->capacity}} {{$tense}}
+                            </div>
+                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                Status: {{$turbine->status}}
+                            </div>
+                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+
+                                Installation Date: {{$turbine->install_date}}
 
                             </div>
 
                         </div>
-
-                        <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                            <h3>Turbines</h3>
-
-                            @if ($farm->status !=="Under Construction")
-
-                            @foreach ($farm->turbines as $turbine)
-                            <div class="flex items-center">
-                                @php
-                                $iconColour =($turbine->status==='Active')?
-                                '00ff00':(($turbine->status==='Retired')?
-                                '#ff0000':(($turbine->status==='Faulty')?'#ffee00':'#ffa500'));
-                                @endphp
-                                <i class="fa-solid fa-fan fa-2xl" style="color: {{$iconColour}}"></i>
-                                <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <a href="/turbines/{{$turbine->id}}"
-                                        class="underline text-gray-900 dark:text-white">{{$turbine->name}}</a>
-                                </div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Description: {{$turbine->description}}
-
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Location: {{$turbine->location}}
-
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Installation Date: {{$turbine->install_date}}
-
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Status: {{$turbine->install_date}}
-
-                                </div>
-                            </div>
-                            @endforeach
-                            @else
-                            <div>
-                                <p>
-                                    No turbines for this farm, as it's currently under construction
-                                </p>
-                            </div>
-                            @endif
-
-                        </div>
-
 
                     </div>
-                    @endforeach
 
                 </div>
             </div>
