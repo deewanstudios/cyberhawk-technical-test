@@ -31,6 +31,7 @@ Route::prefix("farms")->group(function () {
     Route::put("/{farm}", [FarmController::class, 'update']);
     Route::patch("/{farm}", [FarmController::class, 'edit']);
     Route::delete("/{farm}", [FarmController::class, 'delete']);
+    Route::get("/{farm}/turbines", [FarmController::class, 'farmTurbines']);
 });
 
 Route::prefix("turbines")->group(function () {
@@ -40,6 +41,8 @@ Route::prefix("turbines")->group(function () {
     Route::delete("/{turbine}", [TurbineController::class, 'delete']);
     Route::get("/", [TurbineController::class, 'allTurbines']);
     Route::get("/{turbine}", [TurbineController::class, 'show']);
+    Route::get("/{turbine}/inspections", [TurbineController::class, 'turbineInspections']);
+    Route::get("/{turbine}/inspections/{inspection}", [TurbineController::class, 'turbineInspection']);
 });
 
 Route::prefix("components")->group(function () {

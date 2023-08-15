@@ -25,10 +25,10 @@ class TurbineController extends CRUDController
 
     public function turbineInspections(Turbine $turbine)
     {
-        return $this->service->turbineInspections($turbine->id);
+        return $this->service->getTurbineInspections($turbine->id);
     }
     public function turbineInspection(Turbine $turbine, Inspection $inspection)
     {
-        return $this->service->turbineInspection($turbine->id, $inspection->id);
+        return $this->service->getTurbineInspection($turbine->id, $inspection->id);
     }
 }

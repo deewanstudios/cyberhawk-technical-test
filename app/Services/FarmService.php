@@ -15,7 +15,7 @@ class FarmService extends CRUDService
     }
 
 
-    public function farmTurbines($id)
+    public function getFarmTurbines($id)
     {
         $farmTurbines = Farm::with('turbines')->where('id', $id)->get();
         // return response()->json($farmTurbines);

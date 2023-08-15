@@ -30,7 +30,7 @@ class FarmController extends CRUDController
 
     public function farmTurbines(Farm $farm)
     {
-        $farms = $this->service->farmTurbines($farm->id);
+        $farms = $this->service->getFarmTurbines($farm->id);
         return view('farm-turbines', ['farms' => $farms]);
 
     }
