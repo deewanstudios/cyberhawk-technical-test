@@ -21,4 +21,9 @@ class Inspection extends Model
         return $this->belongsTo(Turbine::class);
     }
 
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
 }

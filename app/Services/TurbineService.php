@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Inspection;
 use App\Models\Turbine;
 use App\Services\CRUDService;
 
@@ -36,4 +37,21 @@ class TurbineService extends CRUDService
         $turbine = Turbine::with('turbineComponents.grade', 'turbineComponents.component')->where('id', $id)->get();
         return response()->json($turbine);
     }
+
+
+    public function turbineInspections($id)
+    {
+        $turbineInspections = Turbine::with('inspections')->where('id', $id)->get();
+        return response()->json($turbineInspections);
+
+    }
+    public function turbineInspection($turbineId, $inspectionId)
+    {
+        $turbine = Turbine::findOrFail($turbineId);
+        $inspection = Inspection::where('turbine_id', $turbineId)
+            ->findOrFail($inspectionId);
+        return response()->json(['turbine' => $turbine, 'inspection' => $inspection]);
+
+    }
+
 }
