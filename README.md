@@ -67,4 +67,22 @@ composer install --ignore-platform-reqs
 ```
 
 ## Your Notes
-This is a place for you to add your notes, plans, thinking and any feedback you have for us of the task, please feel free to include whatever you like here, we'll make sure to read it. 
+
+I have thoroughly enjoyed working on this technical test as it as allowed me to put my theoretical ideas to practice and I'm quite hapy with what I have managed to produce. I tried to cover as many aspects of the requirements as possible.
+
+## My Approach
+
+I started by breaking the project down into backend and fronend. Then proceeded to further break diffrent components of the back-end down into the individual tasks, you would see this in my git branching strategy, as I branched of my development branch for every task. That's untill I decided to have a single front-end branch, as I have been very mindful of time and how long I have been working on it for, so I made a decision to get everything else done as best as I can and get it to you guys.
+
+I approached the task as dillegently and thorugh as I could by starting of with a TDD approach to the back-end requirements and modeled my objects in accordance to Laravel's object model. I stopped writing tests as a result of time, I would have like to write tests for every single scenario possible, but again the time thing got me worried, so I deceided to press on with getting as much as I could done. I might go back over the weekend to tidy up some of the tests, as you would find that y approach to testing changed whilst I was working on the turbine feature.
+
+I also changed my whole devlopment approach at the same time. When work began, I treated the task as just a test and not a product, this was put right when I made the change to my testing, as I opted to go down the service repository pattern, as this allowed me to build a system that was easily extensible, maintainable and re-usable. As you would see when I went back to make additional changes to the api funtionality and endpoints, and the approach also allowed me to use majorly the same code for most of the front-end too.
+
+I believe that I would do it all better justice in conversation.
+
+See UML diagram below.
+
+I'm happy to answer any questions you have for me.
+
+
+![Model Diagram](WindFarmXpert.png)
