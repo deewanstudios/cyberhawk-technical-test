@@ -8,6 +8,7 @@ use App\Http\Requests\FarmPatch;
 use App\Models\Farm;
 use App\Http\Requests\FarmStore;
 use App\Exceptions\MissingInputException;
+use App\Services\FarmService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
@@ -125,5 +126,11 @@ class FarmController extends Controller
             ],
             200
         );
+    }
+
+
+    public function farmTurbines(Farm $farm, FarmService $service)
+    {
+        return response()->json($service->getFarmTurbines($farm->id));
     }
 }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Web\FarmController;
+use App\Http\Controllers\Web\InspectionController;
+use App\Http\Controllers\Web\TurbineController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +15,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::prefix('farms')->group(function () {
 
-Route::get('/', function () {
-    return view('welcome');
+    Route::get('/', [FarmController::class, 'index']);
+    Route::get('/{farm}', [FarmController::class, 'show']);
+    Route::get('/{farm}/{turbines}', [FarmController::class, 'farmTurbines']);
+});
+
+
+Route::prefix('turbines')->group(function () {
+    Route::get('/{turbine}', [TurbineController::class, 'show']);
+    Route::get('/{turbine}/{inspections}', [TurbineController::class, 'turbineInspections']);
+    Route::get('/{turbine}/inspections/{inspection}', [TurbineController::class, 'turbineInspection']);
 });

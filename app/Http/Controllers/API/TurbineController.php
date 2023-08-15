@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Services\TurbineService;
 use App\Http\Requests\TurbinePatch;
 use App\Http\Requests\TurbineStore;
+use App\Models\Inspection;
 use Illuminate\Foundation\Http\FormRequest;
 
 
@@ -94,5 +95,14 @@ class TurbineController extends CRUDController
     public function show(Turbine $turbine)
     {
         return $this->service->getATurbineWithRelationships($turbine->id);
+    }
+
+    public function turbineInspections(Turbine $turbine)
+    {
+        return $this->service->getTurbineInspections($turbine->id);
+    }
+    public function turbineInspection(Turbine $turbine, Inspection $inspection)
+    {
+        return $this->service->getTurbineInspection($turbine->id, $inspection->id);
     }
 }
