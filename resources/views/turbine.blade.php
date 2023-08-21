@@ -409,6 +409,10 @@
         body {
             font-family: 'Nunito', sans-serif;
         }
+
+        .max-width {
+            max-width: 2rem;
+        }
     </style>
 </head>
 
@@ -435,42 +439,74 @@
             <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="p-6">
+                        @foreach ($turbine as $item)
+
                         <div class="flex items-center">
+                            {{-- @dump($turbine) --}}
                             @php
-                            $iconColour =($turbine->status==='Active')?
-                            '00ff00':(($turbine->status==='Retired')?
+                            $iconColour =($item->status==='Active')?
+                            '00ff00':(($item->status==='Retired')?
                             '#ff0000':'#ffa500');
                             @endphp
                             <i class="fa-solid fa-fan fa-2xl" style="color: {{$iconColour}}"></i>
                             <div class="ml-4 text-lg leading-7 font-semibold">
-                                <a href="{{$turbine->id}}"
-                                    class="underline text-gray-900 dark:text-white">{{$turbine->name}}</a>
+                                <a href="{{$item->id}}"
+                                    class="underline text-gray-900 dark:text-white">{{$item->name}}</a>
                             </div>
                         </div>
-
                         <div class="ml-12">
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                {{$turbine->description}}
+                                {{$item->description}}
                             </div>
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Coordinates: {{$turbine->location}}
+                                Coordinates: {{$item->location}}
                             </div>
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                 @php
-                                $tense = ($turbine->capacity > 1)? 'Turbines':'Turbine';
+                                $tense = ($item->capacity > 1)? 'Turbines':'Turbine';
                                 @endphp
-                                Capacity: {{$turbine->capacity}} {{$tense}}
+                                Capacity: {{$item->capacity}} {{$tense}}
                             </div>
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                Status: {{$turbine->status}}
+                                Status: {{$item->status}}
                             </div>
                             <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
 
-                                Installation Date: {{$turbine->install_date}}
+                                Installation Date: {{$item->install_date}}
 
                             </div>
 
                         </div>
+
+                        @if ($item->turbineComponents)
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-gear fa-2xl" style="color: #ffffff"></i>
+                            <div class="ml-4 text-lg leading-7 font-semibold">
+                                <p class="underline text-gray-900 dark:text-white">
+                                    Components
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            @foreach ($item->turbineComponents as $component)
+                            <div class="ml-12 min-width">
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                    Name: {{$component->component->name}}
+                                </div>
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                    Description: {{$component->component->description}}
+                                </div>
+                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                    Grade: {{$component->grade->value}}
+                                    <span>{{$component->grade->description}}</span>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        @endif
+                        {{-- @dump($item->turbineComponents) --}}
+                        @endforeach
 
                     </div>
 
