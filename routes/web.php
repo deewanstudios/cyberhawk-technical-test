@@ -21,7 +21,6 @@ Route::get('/', function () {
 });
 
 Route::prefix('farms')->group(function () {
-
     Route::get('/', [FarmController::class, 'index']);
     Route::get('/{farm}', [FarmController::class, 'show']);
     Route::get('/{farm}/{turbines}', [FarmController::class, 'farmTurbines']);
