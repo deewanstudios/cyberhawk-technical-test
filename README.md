@@ -125,7 +125,7 @@ I was hoping to be able to try my hand out on the following bonus tasks, but I w
 - Use of a web map technology in the display of the data
 - API Authentication
 
-## Running The PProject
+## Running The Project
 
 You should be able to run the project by following the initial instructions supplied with the test, that relates to getting things up and running.
 
