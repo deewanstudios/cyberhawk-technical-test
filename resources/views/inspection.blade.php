@@ -411,6 +411,34 @@
                 font-family: 'Nunito', sans-serif;
             }
 
+            .component {
+                font-family: Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            .component td,
+            .component th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            .component tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            .component tr:hover {
+                background-color: #ddd;
+            }
+
+            .component th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #2e302f;
+                color: white;
+            }
+
         </style>
     </head>
 
@@ -435,134 +463,81 @@
 
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
                     <div class="grid grid-cols-1 md:grid-cols-2">
-                        @foreach ($farms as $farm)
                         <div class="p-6">
                             <div class="flex items-center">
-                                @php
-                                $iconColour =($farm->status==='Active')?
-                                '00ff00':(($farm->status==='Retired')?
-                                '#ff0000':'#ffa500');
-                                @endphp
-                                <i class="fa-solid fa-industry fa-2xl" style="color: {{$iconColour}}"></i>
                                 <div class="ml-4 text-lg leading-7 font-semibold">
-                                    <h4 class="underline text-gray-900 dark:text-white">{{$farm->name}}</h4>
-                                </div>
-                            </div>
-
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    {{$farm->address}}
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Coordinates: {{$farm->coordinates}}
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    @php
-                                    $tense = ($farm->capacity > 1)? 'Turbines':'Turbine';
-                                    @endphp
-                                    Capacity: {{$farm->capacity}} {{$tense}}
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Status: {{$farm->status}}
-                                </div>
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    @php
-                                    $date = ($farm->status ==="Under Construction")?'N/A':
-                                    $farm->launched_date;
-                                    @endphp
-                                    Launched: {{$date}}
-
+                                    <h4 class="underline text-gray-900 dark:text-white">
+                                        Inspection Date:
+                                        {{date('Y-m-d',strtotime($inspection['inspection']->inspection_date))}}
+                                    </h4>
+                                    <div> <span>Grade: {{$inspection['inspection']->grade}}</span></div>
+                                    <div><span>Turbine: {{$inspection['turbine']->name}}</span></div>
                                 </div>
 
                             </div>
-
-                            <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                <h3>Turbines</h3>
-
-                                @if ($farm->status !=="Under Construction")
-
-                                @foreach ($farm->turbines as $turbine)
-                                <div class="flex items-center">
-                                    @php
-                                    $iconColour =($turbine->status==='Active')?
-                                    '00ff00':(($turbine->status==='Retired')?
-                                    '#ff0000':(($turbine->status==='Faulty')?'#ffee00':'#ffa500'));
-                                    @endphp
-                                    <i class="fa-solid fa-fan fa-2xl" style="color: {{$iconColour}}"></i>
-                                    <div class="ml-4 text-lg leading-7 font-semibold">
-                                        <a href="/turbines/{{$turbine->id}}"
-                                            class="underline text-gray-900 dark:text-white">{{$turbine->name}}</a>
-                                    </div>
-                                </div>
-
-                                <div class="ml-12">
-                                    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                        Description: {{$turbine->description}}
-
-                                    </div>
-                                    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                        Location: {{$turbine->location}}
-
-                                    </div>
-                                    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                        Installation Date: {{$turbine->install_date}}
-
-                                    </div>
-                                    <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                        Status: {{$turbine->status}}
-
-                                    </div>
-                                </div>
-                                @endforeach
-                                @else
-                                <div>
-                                    <p>
-                                        No turbines for this farm, as it's currently under construction
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-gear fa-2xl" style="color: #292626"></i>
+                                <div class="ml-4 text-lg leading-7 font-semibold">
+                                    <p class="underline text-gray-900 dark:text-white">
+                                        Components
                                     </p>
                                 </div>
-                                @endif
-
                             </div>
-
-
-                        </div>
-                        @endforeach
-
-                    </div>
+                            <table class="component">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($turbineComponents as $component)
+                                    <tr>
+                                        <td>{{$component->name}}</td>
+                                        <td>{{$component->decsription}}</td>
+                                        <td>{{$component->pivot->grade_id}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                 </div>
 
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 sm:text-left">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                                <path
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
-                                </path>
-                            </svg>
+            </div>
+        </div>
 
-                            <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-                                Shop
-                            </a>
+        <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
+            <div class="text-center text-sm text-gray-500 sm:text-left">
+                <div class="flex items-center">
+                    <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                        stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
+                        <path
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z">
+                        </path>
+                    </svg>
 
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                <path
-                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                                </path>
-                            </svg>
+                    <a href="https://laravel.bigcartel.com" class="ml-1 underline">
+                        Shop
+                    </a>
 
-                            <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
-                                Sponsor
-                            </a>
-                        </div>
-                    </div>
+                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
+                        <path
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                        </path>
+                    </svg>
 
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
+                    <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
+                        Sponsor
+                    </a>
                 </div>
             </div>
+
+            <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
+                Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+            </div>
+        </div>
+        </div>
         </div>
     </body>
 
