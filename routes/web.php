@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return redirect('/farms');
+});
+
 Route::prefix('farms')->group(function () {
 
     Route::get('/', [FarmController::class, 'index']);
