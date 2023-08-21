@@ -35,23 +35,20 @@ class TurbineService extends CRUDService
     public function getATurbineWithRelationships($id)
     {
         $turbine = Turbine::with('turbineComponents.grade', 'turbineComponents.component')->where('id', $id)->get();
-        return response()->json($turbine);
+        return ($turbine);
     }
 
 
     public function getTurbineInspections($id)
     {
         $turbineInspections = Turbine::with('inspections')->where('id', $id)->get();
-        return response()->json($turbineInspections);
-
+        return ($turbineInspections);
     }
     public function getTurbineInspection($turbineId, $inspectionId)
     {
         $turbine = Turbine::findOrFail($turbineId);
         $inspection = Inspection::where('turbine_id', $turbineId)
             ->findOrFail($inspectionId);
-        return response()->json(['turbine' => $turbine, 'inspection' => $inspection]);
-
+        return ['turbine' => $turbine, 'inspection' => $inspection];
     }
-
 }

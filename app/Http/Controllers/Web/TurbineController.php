@@ -15,12 +15,11 @@ class TurbineController extends CRUDController
     {
         parent::__construct($turbineService);
         $this->service = new TurbineService();
-
     }
 
     public function show(Turbine $turbine)
     {
-        return view('turbine', ['turbine' => parent::single($turbine->id)]);
+        return view('turbine', ['turbine' => $this->service->getATurbineWithRelationships($turbine->id), 'inspections' => $this->service->getTurbineInspections($turbine->id)]);
     }
 
     public function turbineInspections(Turbine $turbine)
@@ -29,6 +28,8 @@ class TurbineController extends CRUDController
     }
     public function turbineInspection(Turbine $turbine, Inspection $inspection)
     {
-        return $this->service->getTurbineInspection($turbine->id, $inspection->id);
+        $turbineComponents = $turbine->components;
+        $inspection = $this->service->getTurbineInspection($turbine->id, $inspection->id);
+        return view('inspection', ['inspection' => $inspection, 'turbineComponents' => $turbineComponents]);
     }
 }

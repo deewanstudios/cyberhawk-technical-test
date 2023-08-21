@@ -16,12 +16,12 @@ class TurbineController extends CRUDController
 {
     /**
      * Summary of createdObjectType
-     * @var 
+     * @var
      */
     private $createdObjectType;
     /**
      * Summary of service
-     * @var 
+     * @var
      */
     private $service;
     /**
@@ -99,10 +99,10 @@ class TurbineController extends CRUDController
 
     public function turbineInspections(Turbine $turbine)
     {
-        return $this->service->getTurbineInspections($turbine->id);
+        return response()->json($this->service->getTurbineInspections($turbine->id));
     }
     public function turbineInspection(Turbine $turbine, Inspection $inspection)
     {
-        return $this->service->getTurbineInspection($turbine->id, $inspection->id);
+        return response()->json($this->service->getTurbineInspection($turbine->id, $inspection->id));
     }
 }
