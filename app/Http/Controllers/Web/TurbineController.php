@@ -15,13 +15,11 @@ class TurbineController extends CRUDController
     {
         parent::__construct($turbineService);
         $this->service = new TurbineService();
-
     }
 
     public function show(Turbine $turbine)
     {
-        // dd($this->service->getATurbineWithRelationships($turbine->id));
-        return view('turbine', ['turbine' => $this->service->getATurbineWithRelationships($turbine->id)]);
+        return view('turbine', ['turbine' => $this->service->getATurbineWithRelationships($turbine->id), 'inspections' => $this->service->getTurbineInspections($turbine->id)]);
     }
 
     public function turbineInspections(Turbine $turbine)
